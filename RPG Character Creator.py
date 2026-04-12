@@ -59,7 +59,7 @@ class Character:
         # Starting inventory
         self.inventory = {'50 ft rope':1, 'small health potion':4, 'torch': 2, 'water':3, 'rations':1}
 
-    def __str__(self):
+    def __str__(self) -> str:
         return self.char_sheet
 
     @property
@@ -88,7 +88,7 @@ Charisma: {self.charisma}\n"""
 
         print(f'Character sheet for {self.name} the {self.class_name} has been saved as {self.name}_the_{self.race}_{self.class_name}_lvl{self.level}.txt.')
 
-    def gain_exp(self, multiplier=1) -> str | None:
+    def gain_exp(self, multiplier: int = 1) -> str | None:
         if self.passed_out == True:
             return f'{self.name} the {self.class_name} is passed out and cannot gain experience.'
 
@@ -110,8 +110,9 @@ Charisma: {self.charisma}\n"""
             self.wisdom += round(1 * (self.wisdom * 0.08))
             self.charisma += round(1 * (self.charisma * 0.08))
             self.current_hp = self.max_hp
+        return None
 
-    def take_dmg(self, dmg) -> None:
+    def take_dmg(self, dmg: int) -> None:
         if self.current_hp > 0:
             self.current_hp -= dmg
         if self.passed_out == True:
@@ -125,7 +126,7 @@ Charisma: {self.charisma}\n"""
             print(f'{self.name} the {self.class_name} has taken {dmg} points of damage!')
             print(f'Remaining life for {self.name}: {self.current_hp}/{self.max_hp}\n')
 
-    def cause_dmg(self, target) -> int:
+    def cause_dmg(self, target: Character) -> int:
         if self.passed_out == True:
             print(f'{self.name} the {self.class_name} is passed out and cannot attack.')
             return 0
@@ -146,7 +147,7 @@ Charisma: {self.charisma}\n"""
         print(f'{self.name} the {self.class_name} is rested up and ready to go!')
         print(f'Life total: {self.current_hp}/{self.max_hp}\n')
 
-    def use_item(self, item) -> None:
+    def use_item(self, item: str) -> None:
         if item not in self.inventory:
             print(f"{item} is not {self.name}'s inventory.\n")
         elif self.inventory[item] == 1:
@@ -172,7 +173,7 @@ Charisma: {self.charisma}\n"""
             print(f'Life total: {self.current_hp}\n')
             self.passed_out = False
 
-    def add_item(self, item) -> None:
+    def add_item(self, item: str) -> None:
         if item in self.inventory:
             self.inventory[item] += 1
         else:
@@ -188,7 +189,7 @@ Charisma: {self.charisma}\n"""
             print(f"No items in {self.name}'s inventory.\n")
 
     @staticmethod
-    def roll_dice(d_num) -> int:
+    def roll_dice(d_num: int) -> int:
         return randint(1, d_num)
 
 
