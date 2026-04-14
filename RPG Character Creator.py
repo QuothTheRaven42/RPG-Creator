@@ -1,5 +1,6 @@
 from random import randint
 
+
 class Character:
     """Parent class for RPG character classes to inherit.
 
@@ -19,7 +20,7 @@ class Character:
         self.name = input(f"What is your {self.class_name}'s name? ").title()
         self.race = input("\nChoose a race:\n--------\nDwarf\nElf\nGnome\nHalfling\nHuman\n").title()
 
-        self.max_hp = randint(8,20)
+        self.max_hp = randint(8, 20)
         self.strength = randint(5, 15)
         self.dexterity = randint(5, 15)
         self.constitution = randint(5, 15)
@@ -57,7 +58,13 @@ class Character:
             self.charisma += 2
 
         # Starting inventory
-        self.inventory = {'50 ft rope':1, 'small health potion':4, 'torch': 2, 'water':3, 'rations':1}
+        self.inventory: dict = {
+            "50 ft rope": 1,
+            "small health potion": 4,
+            "torch": 2,
+            "water": 3,
+            "rations": 1,
+        }
 
     def __str__(self) -> str:
         return self.char_sheet
@@ -76,31 +83,37 @@ Charisma: {self.charisma}\n"""
         return char_sheet
 
     def display_sheet(self) -> None:
-        print(f'\nYour character sheet for {self.name} the {self.class_name}:')
-        print(f'{self.char_sheet}')
+        print(f"\nYour character sheet for {self.name} the {self.class_name}:")
+        print(f"{self.char_sheet}")
 
     def export_char_sheet(self) -> None:
-        with open(f"{self.name}_the_{self.race}_{self.class_name}_lvl{self.level}.txt", "w") as file:
+        with open(
+            f"{self.name}_the_{self.race}_{self.class_name}_lvl{self.level}.txt", "w"
+        ) as file:
             file.write(self.char_sheet)
-            file.write('\nInventory:\n')
+            file.write("\nInventory:\n")
             lines = "\n".join(f"{value} {key}" for key, value in self.inventory.items())
-            file.write(f'{lines}')
+            file.write(f"{lines}")
 
-        print(f'Character sheet for {self.name} the {self.class_name} has been saved as {self.name}_the_{self.race}_{self.class_name}_lvl{self.level}.txt.')
+        print(
+            f"Character sheet for {self.name} the {self.class_name} has been saved as {self.name}_the_{self.race}_{self.class_name}_lvl{self.level}.txt."
+        )
 
     def gain_exp(self, multiplier: int = 1) -> str | None:
         if self.passed_out == True:
-            return f'{self.name} the {self.class_name} is passed out and cannot gain experience.'
+            return f"{self.name} the {self.class_name} is passed out and cannot gain experience."
 
         experience = 10 * multiplier
         self.exp += experience
-        print(f'{self.name} the {self.class_name} has gained {experience} experience points and has {self.exp} total.')
+        print(
+            f"{self.name} the {self.class_name} has gained {experience} experience points and has {self.exp} total."
+        )
 
         if self.exp >= 50 * self.level:
             self.exp = 0
             self.level += 1
-            print(f'\n{self.name} has gained a level...')
-            print(f'They are now level {self.level}!\n')
+            print(f"\n{self.name} has gained a level...")
+            print(f"They are now level {self.level}!\n")
 
             self.max_hp += round(2.5 * (self.constitution * 0.1))
             self.strength += round(1 * (self.strength * 0.08))
@@ -110,67 +123,68 @@ Charisma: {self.charisma}\n"""
             self.wisdom += round(1 * (self.wisdom * 0.08))
             self.charisma += round(1 * (self.charisma * 0.08))
             self.current_hp = self.max_hp
+
         return None
 
     def take_dmg(self, dmg: int) -> None:
         if self.current_hp > 0:
             self.current_hp -= dmg
         if self.passed_out == True:
-            print(f'{self.name} the {self.class_name} is passed out and cannot take damage.')
+            print(f"{self.name} the {self.class_name} is passed out and cannot take damage.")
         elif self.current_hp < 0:
             self.current_hp = 0
             self.passed_out = True
-            print(f'{self.name} the {self.class_name} took {dmg} damage and has passed out!\n')
-            print(f'Life total: {self.current_hp}/{self.max_hp}')
+            print(f"{self.name} the {self.class_name} took {dmg} damage and has passed out!\n")
+            print(f"Life total: {self.current_hp}/{self.max_hp}")
         else:
-            print(f'{self.name} the {self.class_name} has taken {dmg} points of damage!')
-            print(f'Remaining life for {self.name}: {self.current_hp}/{self.max_hp}\n')
+            print(f"{self.name} the {self.class_name} has taken {dmg} points of damage!")
+            print(f"Remaining life for {self.name}: {self.current_hp}/{self.max_hp}\n")
 
     def cause_dmg(self, target: Character) -> int:
         if self.passed_out == True:
-            print(f'{self.name} the {self.class_name} is passed out and cannot attack.')
+            print(f"{self.name} the {self.class_name} is passed out and cannot attack.")
             return 0
         elif target.passed_out == True:
-            print(f'{self.name} has already won! {target.name} is passed out and cannot be attacked.')
+            print(f"{self.name} has already won! {target.name} is passed out and cannot be attacked.")
             return 0
         else:
             dmg = Character.roll_dice(6)
-            print(f'{self.name} the {self.class_name} attacks for {dmg} hp!')
+            print(f"{self.name} the {self.class_name} attacks for {dmg} hp!")
             target.take_dmg(dmg)
             self.gain_exp()
             return dmg
 
     def rest(self) -> None:
-        print('\nResting up......')
+        print("\nResting up......")
         self.current_hp = self.max_hp
         self.passed_out = False
-        print(f'{self.name} the {self.class_name} is rested up and ready to go!')
-        print(f'Life total: {self.current_hp}/{self.max_hp}\n')
+        print(f"{self.name} the {self.class_name} is rested up and ready to go!")
+        print(f"Life total: {self.current_hp}/{self.max_hp}\n")
 
     def use_item(self, item: str) -> None:
         if item not in self.inventory:
             print(f"{item} is not {self.name}'s inventory.\n")
         elif self.inventory[item] == 1:
             del self.inventory[item]
-            print(f'{self.name} the {self.class_name} used {item} from their inventory.')
+            print(f"{self.name} the {self.class_name} used {item} from their inventory.")
         else:
             self.inventory[item] -= 1
-            print(f'{self.name} the {self.class_name} used {item} from their inventory.')
-            print(f'There are {self.inventory[item]} {item} left in the inventory.')
+            print(f"{self.name} the {self.class_name} used {item} from their inventory.")
+            print(f"There are {self.inventory[item]} {item} left in the inventory.")
 
         # healing items
-        if item == 'small health potion':
+        if item == "small health potion":
             num = Character.roll_dice(6)
             self.current_hp = min(self.current_hp + num, self.max_hp)
-            print(f'small health potion used - +{num} health gained!')
-            print(f'Life total: {self.current_hp}\n')
+            print(f"small health potion used - +{num} health gained!")
+            print(f"Life total: {self.current_hp}\n")
             self.passed_out = False
 
-        elif item == 'large health potion':
+        elif item == "large health potion":
             num = Character.roll_dice(20) + Character.roll_dice(6)
             self.current_hp = min(self.current_hp + num, self.max_hp)
-            print(f'large health potion used - +{num} health gained!')
-            print(f'Life total: {self.current_hp}\n')
+            print(f"large health potion used - +{num} health gained!")
+            print(f"Life total: {self.current_hp}\n")
             self.passed_out = False
 
     def add_item(self, item: str) -> None:
@@ -178,12 +192,11 @@ Charisma: {self.charisma}\n"""
             self.inventory[item] += 1
         else:
             self.inventory[item] = 1
-        print(f'{item} added to the inventory.')
+        print(f"{item} added to the inventory.")
 
     def view_inventory(self) -> None:
         if self.inventory:
-            lines = "\n".join(f"{value} {key}" 
-                              for key, value in self.inventory.items())
+            lines = "\n".join(f"{value} {key}" for key, value in self.inventory.items())
             print(f"{self.name}'s inventory:\n{lines}\n")
         else:
             print(f"No items in {self.name}'s inventory.\n")
