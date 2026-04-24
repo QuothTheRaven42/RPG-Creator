@@ -1,3 +1,7 @@
+"""A Python RPG character system featuring a base Character class with six subclasses —
+(Barbarian, Cleric, Wizard, Sorcerer, Fighter, Rogue)
+Race-based stat bonuses, leveling, combat, inventory management, and character sheet export."""
+
 from random import randint
 
 
