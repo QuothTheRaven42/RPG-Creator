@@ -19,22 +19,22 @@ class Character:
     """
 
     def __init__(self):
-        self.class_name = self.__class__.__name__.lower()
-        self.current_hp = 0
-        self.name = input(f"What is your {self.class_name}'s name? ").title()
-        self.race = input("\nChoose a race:\n--------\nDwarf\nElf\nGnome\nHalfling\nHuman\n").title()
+        self.class_name: str = self.__class__.__name__.lower()
+        self.current_hp: int = 0
+        self.name: str = input(f"What is your {self.class_name}'s name? ").title()
+        self.race: str = input("\nChoose a race:\n--------\nDwarf\nElf\nGnome\nHalfling\nHuman\n").title()
 
-        self.max_hp = randint(8, 20)
-        self.strength = randint(5, 15)
-        self.dexterity = randint(5, 15)
-        self.constitution = randint(5, 15)
-        self.intelligence = randint(5, 15)
-        self.wisdom = randint(5, 15)
-        self.charisma = randint(5, 15)
+        self.max_hp: int = randint(8, 20)
+        self.strength: int = randint(5, 15)
+        self.dexterity: int = randint(5, 15)
+        self.constitution: int = randint(5, 15)
+        self.intelligence: int = randint(5, 15)
+        self.wisdom: int = randint(5, 15)
+        self.charisma: int = randint(5, 15)
 
-        self.passed_out = False
-        self.level = 1
-        self.exp = 0
+        self.passed_out: bool = False
+        self.level: int = 1
+        self.exp: int = 0
 
         # Race bonuses
         if self.race == "Human":
@@ -104,7 +104,7 @@ Charisma: {self.charisma}\n"""
         )
 
     def gain_exp(self, multiplier: int = 1) -> str | None:
-        if self.passed_out == True:
+        if self.passed_out:
             return f"{self.name} the {self.class_name} is passed out and cannot gain experience."
 
         experience = 10 * multiplier
@@ -114,7 +114,7 @@ Charisma: {self.charisma}\n"""
         )
 
         if self.exp >= 50 * self.level:
-            self.exp = 0
+            self.exp: int = 0
             self.level += 1
             print(f"\n{self.name} has gained a level...")
             print(f"They are now level {self.level}!\n")
@@ -133,7 +133,7 @@ Charisma: {self.charisma}\n"""
     def take_dmg(self, dmg: int) -> None:
         if self.current_hp > 0:
             self.current_hp -= dmg
-        if self.passed_out == True:
+        if self.passed_out:
             print(f"{self.name} the {self.class_name} is passed out and cannot take damage.")
         elif self.current_hp < 0:
             self.current_hp = 0
@@ -145,10 +145,10 @@ Charisma: {self.charisma}\n"""
             print(f"Remaining life for {self.name}: {self.current_hp}/{self.max_hp}\n")
 
     def cause_dmg(self, target: Character) -> int:
-        if self.passed_out == True:
+        if self.passed_out:
             print(f"{self.name} the {self.class_name} is passed out and cannot attack.")
             return 0
-        elif target.passed_out == True:
+        elif target.passed_out:
             print(f"{self.name} has already won! {target.name} is passed out and cannot be attacked.")
             return 0
         else:
@@ -178,18 +178,18 @@ Charisma: {self.charisma}\n"""
 
         # healing items
         if item == "small health potion":
-            num = Character.roll_dice(6)
+            num: int = Character.roll_dice(6)
             self.current_hp = min(self.current_hp + num, self.max_hp)
             print(f"small health potion used - +{num} health gained!")
             print(f"Life total: {self.current_hp}\n")
             self.passed_out = False
 
         elif item == "large health potion":
-            num = Character.roll_dice(20) + Character.roll_dice(6)
-            self.current_hp = min(self.current_hp + num, self.max_hp)
+            num: int = Character.roll_dice(20) + Character.roll_dice(6)
+            self.current_hp: int = min(self.current_hp + num, self.max_hp)
             print(f"large health potion used - +{num} health gained!")
             print(f"Life total: {self.current_hp}\n")
-            self.passed_out = False
+            self.passed_out: bool = False
 
     def add_item(self, item: str) -> None:
         if item in self.inventory:
@@ -200,7 +200,7 @@ Charisma: {self.charisma}\n"""
 
     def view_inventory(self) -> None:
         if self.inventory:
-            lines = "\n".join(f"{value} {key}" for key, value in self.inventory.items())
+            lines: str = "\n".join(f"{value} {key}" for key, value in self.inventory.items())
             print(f"{self.name}'s inventory:\n{lines}\n")
         else:
             print(f"No items in {self.name}'s inventory.\n")
@@ -216,7 +216,7 @@ class Barbarian(Character):
         self.strength += 3
         self.constitution += 3
         self.intelligence -= 3
-        self.current_hp = self.max_hp
+        self.current_hp: int = self.max_hp
         self.display_sheet()
 
 
@@ -226,7 +226,7 @@ class Cleric(Character):
         self.constitution += 3
         self.wisdom += 3
         self.charisma -= 3
-        self.current_hp = self.max_hp
+        self.current_hp: int = self.max_hp
         self.display_sheet()
 
 
@@ -236,7 +236,7 @@ class Wizard(Character):
         self.intelligence += 3
         self.charisma += 3
         self.max_hp -= 3
-        self.current_hp = self.max_hp
+        self.current_hp: int = self.max_hp
         self.display_sheet()
 
 
@@ -246,7 +246,7 @@ class Sorcerer(Character):
         self.wisdom += 3
         self.max_hp += 3
         self.dexterity -= 3
-        self.current_hp = self.max_hp
+        self.current_hp: int = self.max_hp
         self.display_sheet()
 
 
@@ -256,7 +256,7 @@ class Fighter(Character):
         self.strength += 3
         self.charisma += 3
         self.wisdom -= 3
-        self.current_hp = self.max_hp
+        self.current_hp: int = self.max_hp
         self.display_sheet()
 
 
@@ -266,5 +266,5 @@ class Rogue(Character):
         self.dexterity += 3
         self.intelligence += 3
         self.constitution -= 3
-        self.current_hp = self.max_hp
+        self.current_hp: int = self.max_hp
         self.display_sheet()
