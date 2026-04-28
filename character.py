@@ -1,5 +1,7 @@
-from random import randint
+"""The Character class for setting stats, displaying character sheet, and various character actions."""
+
 from combatant import *
+
 
 class Character(Combatant):
     """Parent class for RPG character classes to inherit.
@@ -13,14 +15,13 @@ class Character(Combatant):
         exp (int): Total experience for the current level, resets on level up.
         char_sheet (str): Name, race, class, level, and stats.
     """
+
     def __init__(self, name, race, hit_dice):
         self.class_name: str = self.__class__.__name__.lower()
-        self.current_hp: int = 0
         self.name: str = name
         self.race: str = race
         self.max_hp: int = randint(8, 20)
         super().__init__(self.name, self.class_name, hit_dice, hit_dice)
-
 
         self.strength: int = randint(5, 15)
         self.dexterity: int = randint(5, 15)
@@ -72,8 +73,14 @@ class Character(Combatant):
     @classmethod
     def from_prompt(cls):
         name: str = input(f"What is your {cls.__name__}'s name? ").title()
-        race: str = input("\nChoose a race:\n--------\nDwarf\nElf\nGnome\nHalfling\nHuman\n").title()
-        return cls(name, race)
+        while True:
+            race: str = input(
+                "\nChoose a race:\n--------\nDwarf\nElf\nGnome\nHalfling\nHuman\n"
+            ).title()
+            if race not in ["Human", "Dwarf", "Elf", "Gnome", "Halfling"]:
+                print(f"{race} is not a valid option, please try again.\n")
+                continue
+            return cls(name, race)
 
     @property
     def char_sheet(self) -> str:
@@ -106,9 +113,6 @@ Charisma: {self.charisma}\n"""
             f"Character sheet for {self.name} the {self.class_name} has been saved as {self.name}_the_{self.race}_{self.class_name}_lvl{self.level}.txt."
         )
 
-
-
-
     def rest(self) -> None:
         print("\nResting up......")
         self.current_hp = self.max_hp
@@ -134,7 +138,6 @@ Charisma: {self.charisma}\n"""
             print(f"small health potion used - +{num} health gained!")
             print(f"Life total: {self.current_hp}\n")
             self.passed_out = False
-
         elif item == "large health potion":
             num: int = Character.roll_dice(20) + Character.roll_dice(6)
             self.current_hp: int = min(self.current_hp + num, self.max_hp)
@@ -155,4 +158,3 @@ Charisma: {self.charisma}\n"""
             print(f"{self.name}'s inventory:\n{lines}\n")
         else:
             print(f"No items in {self.name}'s inventory.\n")
-
