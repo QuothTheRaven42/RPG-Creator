@@ -16,8 +16,8 @@ class Barbarian(Character, Combatant):
 
 
 class Cleric(Character, Combatant):
-    def __init__(self, name, race, max_hp, hit_dice):
-        super().__init__(name, race, max_hp, hit_dice)
+    def __init__(self, name, race):
+        super().__init__(name, race, 6)
         self.constitution += 3
         self.wisdom += 3
         self.charisma -= 3
@@ -26,8 +26,8 @@ class Cleric(Character, Combatant):
 
 
 class Wizard(Character, Combatant):
-    def __init__(self, name, race, max_hp, hit_dice):
-        super().__init__(name, race, max_hp, hit_dice)
+    def __init__(self, name, race):
+        super().__init__(name, race, 8)
         self.intelligence += 3
         self.charisma += 3
         self.max_hp -= 3
@@ -36,8 +36,8 @@ class Wizard(Character, Combatant):
 
 
 class Sorcerer(Character, Combatant):
-    def __init__(self, name, race, max_hp, hit_dice):
-        super().__init__(name, race, max_hp, hit_dice)
+    def __init__(self, name, race):
+        super().__init__(name, race, 16)
         self.wisdom += 3
         self.max_hp += 3
         self.dexterity -= 3
@@ -46,8 +46,8 @@ class Sorcerer(Character, Combatant):
 
 
 class Fighter(Character, Combatant):
-    def __init__(self, name, race, max_hp, hit_dice):
-        super().__init__(name, race, max_hp, hit_dice)
+    def __init__(self, name, race):
+        super().__init__(name, race, 20)
         self.strength += 3
         self.charisma += 3
         self.wisdom -= 3
@@ -56,8 +56,8 @@ class Fighter(Character, Combatant):
 
 
 class Rogue(Character, Combatant):
-    def __init__(self, name, race, max_hp, hit_dice):
-        super().__init__(name, race, max_hp, hit_dice)
+    def __init__(self, name, race):
+        super().__init__(name, race, 8)
         self.dexterity += 3
         self.intelligence += 3
         self.constitution -= 3
@@ -65,9 +65,34 @@ class Rogue(Character, Combatant):
         self.display_sheet()
 
 
+CLASSES = {'barbarian': Barbarian, 'cleric': Cleric, 'wizard': Wizard, 'sorcerer': Sorcerer, 'fighter': Fighter, 'rogue': Rogue }
 
-jim = Barbarian.from_prompt()
 
-dragon1 = DragonFactory().create()
+while True:
+    try:
+        amount = int(input("How many players? Enter a digit of up to 4. ").strip())
+    except TypeError:
+        print("Not a number, please try again.\n")
+        continue
+    if amount <= 0 or amount > 4:
+        print("Not a valid amount, please try again.\n")
+        continue
+    amount = int(amount)
+    break
 
-dragon1.cause_dmg(jim)
+players = {}
+for num in range(1, amount+1):
+    while True:
+        class_choice = input(
+            f"Which class for player #{num}?\nBarbarian, Cleric, Wizard, Sorcerer, Fighter, or Rogue "
+        ).strip()
+        if class_choice not in ['barbarian', 'cleric', 'wizard', 'sorcerer', 'fighter', 'rogue']:
+            print("Not a valid class option, please try again.\n")
+            continue
+        character = CLASSES[class_choice].from_prompt()
+        players[character.name] = character
+        break
+print('The party:')
+for player in players.values():
+    print(f'{player.name} - {player.race} {player.class_name} - level {player.level}')
+
