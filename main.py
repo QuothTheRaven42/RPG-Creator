@@ -2,12 +2,12 @@
 (Barbarian, Cleric, Wizard, Sorcerer, Fighter, Rogue)
 Race-based stat bonuses, leveling, combat, inventory management, and character sheet export."""
 from factory_methods import *
-from character import *
+from combatant import *
 
 
-class Barbarian(Character):
+class Barbarian(Character, Combatant):
     def __init__(self, name, race):
-        super().__init__(name, race)
+        super().__init__(name, race, 12)
         self.strength += 3
         self.constitution += 3
         self.intelligence -= 3
@@ -15,9 +15,9 @@ class Barbarian(Character):
         self.display_sheet()
 
 
-class Cleric(Character):
-    def __init__(self, name, race):
-        super().__init__()
+class Cleric(Character, Combatant):
+    def __init__(self, name, race, max_hp, hit_dice):
+        super().__init__(name, race, max_hp, hit_dice)
         self.constitution += 3
         self.wisdom += 3
         self.charisma -= 3
@@ -25,9 +25,9 @@ class Cleric(Character):
         self.display_sheet()
 
 
-class Wizard(Character):
-    def __init__(self, name, race):
-        super().__init__()
+class Wizard(Character, Combatant):
+    def __init__(self, name, race, max_hp, hit_dice):
+        super().__init__(name, race, max_hp, hit_dice)
         self.intelligence += 3
         self.charisma += 3
         self.max_hp -= 3
@@ -35,9 +35,9 @@ class Wizard(Character):
         self.display_sheet()
 
 
-class Sorcerer(Character):
-    def __init__(self, name, race):
-        super().__init__()
+class Sorcerer(Character, Combatant):
+    def __init__(self, name, race, max_hp, hit_dice):
+        super().__init__(name, race, max_hp, hit_dice)
         self.wisdom += 3
         self.max_hp += 3
         self.dexterity -= 3
@@ -45,9 +45,9 @@ class Sorcerer(Character):
         self.display_sheet()
 
 
-class Fighter(Character):
-    def __init__(self, name, race):
-        super().__init__()
+class Fighter(Character, Combatant):
+    def __init__(self, name, race, max_hp, hit_dice):
+        super().__init__(name, race, max_hp, hit_dice)
         self.strength += 3
         self.charisma += 3
         self.wisdom -= 3
@@ -55,9 +55,9 @@ class Fighter(Character):
         self.display_sheet()
 
 
-class Rogue(Character):
-    def __init__(self, name, race):
-        super().__init__()
+class Rogue(Character, Combatant):
+    def __init__(self, name, race, max_hp, hit_dice):
+        super().__init__(name, race, max_hp, hit_dice)
         self.dexterity += 3
         self.intelligence += 3
         self.constitution -= 3
@@ -67,11 +67,7 @@ class Rogue(Character):
 
 
 jim = Barbarian.from_prompt()
+
 dragon1 = DragonFactory().create()
-# character = Barbarian()
-#
-# character.display_sheet()
-#
+
 dragon1.cause_dmg(jim)
-#
-# character.display_sheet()

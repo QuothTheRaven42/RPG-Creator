@@ -1,6 +1,7 @@
 from random import randint
+from combatant import *
 
-class Character:
+class Character(Combatant):
     """Parent class for RPG character classes to inherit.
 
     Initializes character stats before class bonuses and creates the starting inventory.
@@ -12,13 +13,15 @@ class Character:
         exp (int): Total experience for the current level, resets on level up.
         char_sheet (str): Name, race, class, level, and stats.
     """
-    def __init__(self, name, race):
+    def __init__(self, name, race, hit_dice):
         self.class_name: str = self.__class__.__name__.lower()
         self.current_hp: int = 0
         self.name: str = name
         self.race: str = race
-
         self.max_hp: int = randint(8, 20)
+        super().__init__(self.name, self.class_name, hit_dice, hit_dice)
+
+
         self.strength: int = randint(5, 15)
         self.dexterity: int = randint(5, 15)
         self.constitution: int = randint(5, 15)
@@ -26,7 +29,6 @@ class Character:
         self.wisdom: int = randint(5, 15)
         self.charisma: int = randint(5, 15)
 
-        self.passed_out: bool = False
         self.level: int = 1
         self.exp: int = 0
 
@@ -84,6 +86,7 @@ Constitution: {self.constitution}
 Intelligence: {self.intelligence}
 Wisdom: {self.wisdom}
 Charisma: {self.charisma}\n"""
+
         return char_sheet
 
     def display_sheet(self) -> None:
@@ -103,60 +106,8 @@ Charisma: {self.charisma}\n"""
             f"Character sheet for {self.name} the {self.class_name} has been saved as {self.name}_the_{self.race}_{self.class_name}_lvl{self.level}.txt."
         )
 
-    def gain_exp(self, multiplier: int = 1) -> str | None:
-        if self.passed_out:
-            return f"{self.name} the {self.class_name} is passed out and cannot gain experience."
 
-        experience = 10 * multiplier
-        self.exp += experience
-        print(
-            f"{self.name} the {self.class_name} has gained {experience} experience points and has {self.exp} total."
-        )
 
-        if self.exp >= 50 * self.level:
-            self.exp: int = 0
-            self.level += 1
-            print(f"\n{self.name} has gained a level...")
-            print(f"They are now level {self.level}!\n")
-
-            self.max_hp += round(2.5 * (self.constitution * 0.1))
-            self.strength += round(1 * (self.strength * 0.08))
-            self.dexterity += round(1 * (self.dexterity * 0.08))
-            self.constitution += round(1 * (self.constitution * 0.08))
-            self.intelligence += round(1 * (self.intelligence * 0.08))
-            self.wisdom += round(1 * (self.wisdom * 0.08))
-            self.charisma += round(1 * (self.charisma * 0.08))
-            self.current_hp = self.max_hp
-
-        return None
-
-    def take_dmg(self, dmg: int) -> None:
-        if self.current_hp > 0:
-            self.current_hp -= dmg
-        if self.passed_out:
-            print(f"{self.name} the {self.class_name} is passed out and cannot take damage.")
-        elif self.current_hp < 0:
-            self.current_hp = 0
-            self.passed_out = True
-            print(f"{self.name} the {self.class_name} took {dmg} damage and has passed out!\n")
-            print(f"Life total: {self.current_hp}/{self.max_hp}")
-        else:
-            print(f"{self.name} the {self.class_name} has taken {dmg} points of damage!")
-            print(f"Remaining life for {self.name}: {self.current_hp}/{self.max_hp}\n")
-
-    def cause_dmg(self, target: Character) -> int:
-        if self.passed_out:
-            print(f"{self.name} the {self.class_name} is passed out and cannot attack.")
-            return 0
-        elif target.passed_out:
-            print(f"{self.name} has already won! {target.name} is passed out and cannot be attacked.")
-            return 0
-        else:
-            dmg = Character.roll_dice(6)
-            print(f"{self.name} the {self.class_name} attacks for {dmg} hp!")
-            target.take_dmg(dmg)
-            self.gain_exp()
-            return dmg
 
     def rest(self) -> None:
         print("\nResting up......")
@@ -205,6 +156,3 @@ Charisma: {self.charisma}\n"""
         else:
             print(f"No items in {self.name}'s inventory.\n")
 
-    @staticmethod
-    def roll_dice(d_num: int) -> int:
-        return randint(1, d_num)

@@ -1,6 +1,7 @@
 """Create monsters for an RPG using a factory."""
 from abc import ABC, abstractmethod
 from character import *
+from combatant import *
 
 
 def spawn_enemy(factory):
@@ -8,15 +9,14 @@ def spawn_enemy(factory):
     return enemy
 
 
-class Enemy(Character):
+class Enemy(Combatant):
     """Based enemy class to inherit"""
-    def __init__(self, name, race, attack_power):
-        super().__init__(name, race)
-        self.name = name
-        self.attack_power = attack_power
+    def __init__(self, name, class_name, max_hp, hit_dice):
+        super().__init__(name, class_name, max_hp, hit_dice)
+        self.hit_dice : int = hit_dice
 
     def describe(self):
-        return f'{self.name} (attack: {self.attack_power})'
+        return f'{self.name} (attack: {self.hit_dice})'
 
     def display_sheet(self):
         raise NotImplementedError("Enemies don't have character sheets.")
@@ -49,35 +49,20 @@ class DragonFactory(EnemyFactory):
 class Goblin(Enemy):
     """The Goblin class"""
     def __init__(self):
-        super().__init__("Goblin", "Goblin", 5)
+        super().__init__("Goblin", "Goblin", 10,5)
 
 
 class Skeleton(Enemy):
     """The Skeleton class"""
     def __init__(self):
-        super().__init__("Skeleton", "Skeleton", 10)
+        super().__init__("Skeleton", "Skeleton", 15,10)
 
 
 class Dragon(Enemy):
     """The Dragon class"""
     def __init__(self):
-        super().__init__("Dragon", "Dragon",30)
-
-    def cause_dmg(self, target: Character) -> int:
-        if self.passed_out:
-            print(f"{self.name} the {self.class_name} is passed out and cannot attack.")
-            return 0
-        elif target.passed_out:
-            print(f"{self.name} has already won! {target.name} is passed out and cannot be attacked.")
-            return 0
-        else:
-            dmg = Character.roll_dice(self.attack_power)
-            print(f"{self.name} the {self.class_name} attacks for {dmg} hp!")
-            target.take_dmg(dmg)
-            self.gain_exp()
-            return dmg
+        super().__init__("Dragon", "Dragon", 100, 30)
 
 
 
-d = spawn_enemy(DragonFactory())
-print(d.describe())
+
