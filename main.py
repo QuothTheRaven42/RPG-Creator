@@ -3,6 +3,7 @@
 Race-based stat bonuses, leveling, combat, inventory management, and character sheet export."""
 
 from classes import *
+from enemies import *
 
 CLASSES = {
     "barbarian": Barbarian,
