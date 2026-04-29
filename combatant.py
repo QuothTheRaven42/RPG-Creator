@@ -22,7 +22,6 @@ class Combatant:
             self.current_hp = 0
             self.passed_out = True
             print(f"{self.name} took {dmg} damage and has passed out!\n")
-            print(f"Life total: {self.current_hp}/{self.max_hp}")
         else:
             print(f"{self.name} has taken {dmg} points of damage!")
             print(f"Remaining life for {self.name}: {self.current_hp}/{self.max_hp}\n")
@@ -50,7 +49,7 @@ class Combatant:
 
         experience = 10 * multiplier
         self.exp += experience
-        print(f"{self.name} has gained {experience} experience points and has {self.exp} total.")
+        print(f"{self.name} has gained {experience} experience points and has {self.exp} total.\n")
 
         if self.exp >= 50 * self.level:
             self.exp: int = 0

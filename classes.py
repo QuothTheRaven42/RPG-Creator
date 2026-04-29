@@ -7,7 +7,7 @@ from combatant import *
 
 class Barbarian(Character, Combatant):
     def __init__(self, name, race):
-        super().__init__(name, race, 12)
+        super().__init__(name, race, 20)
         self.strength += 3
         self.constitution += 3
         self.intelligence -= 3
@@ -47,7 +47,7 @@ class Sorcerer(Character, Combatant):
 
 class Fighter(Character, Combatant):
     def __init__(self, name, race):
-        super().__init__(name, race, 20)
+        super().__init__(name, race, 14)
         self.strength += 3
         self.charisma += 3
         self.wisdom -= 3

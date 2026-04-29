@@ -134,12 +134,16 @@ Charisma: {self.charisma}\n"""
         # healing items
         if item == "small health potion":
             num: int = Character.roll_dice(6)
+            if self.class_name == "Cleric":
+                num += 4
             self.current_hp = min(self.current_hp + num, self.max_hp)
             print(f"small health potion used - +{num} health gained!")
             print(f"Life total: {self.current_hp}\n")
             self.passed_out = False
         elif item == "large health potion":
             num: int = Character.roll_dice(20) + Character.roll_dice(6)
+            if self.class_name == "Cleric":
+                num += 12
             self.current_hp: int = min(self.current_hp + num, self.max_hp)
             print(f"large health potion used - +{num} health gained!")
             print(f"Life total: {self.current_hp}\n")
