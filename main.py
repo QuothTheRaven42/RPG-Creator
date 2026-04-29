@@ -92,36 +92,36 @@ def battle_loop():
             break
 
         time.sleep(.5)
+        for _ in range(enemies[enemy]):
+            if not enemy.passed_out:
+                enemy.cause_dmg(choice(active_players))
 
-        if not enemy.passed_out:
-            enemy.cause_dmg(choice(active_players))
 
+        # players' battle loop
+        done = False
 
-    # players' battle loop
-    done = False
+        for player in players.values():
+            for enemy in enemies.keys():
+                if not player.passed_out and not enemy.passed_out:
+                    player.cause_dmg(enemy)
 
-    for player in players.values():
-        for enemy in enemies.keys():
-            if not player.passed_out and not enemy.passed_out:
-                player.cause_dmg(enemy)
+                time.sleep(.5)
 
-            time.sleep(.5)
+                if enemy.passed_out:
+                    enemies[enemy] -= 1
 
-            if enemy.passed_out:
-                enemies[enemy] -= 1
+                    if enemies[enemy] > 0:
+                        enemy.passed_out = False
+                        enemy.current_hp = enemy.max_hp
+                        print(f'Another enemy steps forward! {enemies[enemy]} of the enemies remain.\n')
 
-                if enemies[enemy] > 0:
-                    enemy.passed_out = False
-                    enemy.current_hp = enemy.max_hp
-                    print(f'Another enemy steps forward! {enemies[enemy]} of the enemies remain.\n')
+                    else:
+                        print(f'Every enemy has been defeated!')
+                        done = True
+                        break
 
-                else:
-                    print(f'Every enemy has been defeated!')
-                    done = True
-                    break
-
-        if done:
-            break
+            if done:
+                break
 
 
 if __name__ == "__main__":
