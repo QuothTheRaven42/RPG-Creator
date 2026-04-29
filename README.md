@@ -7,7 +7,7 @@ The project also includes an enemy spawning system built with the Factory Method
 | File | Description |
 |------|-------------|
 | `character.py` | Player character base class and all playable subclasses |
-| `classes.py` | Character classes for player characters.
+| `classes.py` | Character classes for player's characters.
 | `combatant.py` | Shared base class for combat behavior — used by both characters and enemies |
 | `enemies.py` | Enemy classes and factories built with the Factory Method pattern |
 | `main.py` | Entry point for running the project |
