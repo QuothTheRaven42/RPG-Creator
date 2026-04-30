@@ -1,6 +1,7 @@
-"""A Python RPG character system featuring a base Character class with six subclasses —
-(Barbarian, Cleric, Wizard, Sorcerer, Fighter, Rogue)
-Race-based stat bonuses, leveling, combat, inventory management, and character sheet export."""
+"""
+A Python RPG system
+Main script for the battle loop
+"""
 
 from classes import *
 from enemies import *
@@ -32,16 +33,18 @@ def battle_loop():
             print("Not a number, please try again.\n")
             continue
 
-        if amount <= 0 or amount > 4:
+        if amount <= 0 or amount > 6:
             print("Not a valid amount, please try again.\n")
             continue
 
         amount = int(amount)
         break
 
-
     # CHARACTER IMPORT GOES HERE
-
+    # ask how many characters would be imported
+    # have them enter the filename (tkinter?)
+    # then create the characters remaining
+    # and export the characters at the end of the battle
 
     players = {}
     for num in range(1, amount + 1):
@@ -49,10 +52,19 @@ def battle_loop():
             class_choice = (
                 input(
                     f"Which class for player #{num}?\nBarbarian, Cleric, Wizard, Sorcerer, Fighter, or Rogue "
-                ).lower().strip()
+                )
+                .lower()
+                .strip()
             )
 
-            if class_choice not in ["barbarian", "cleric", "wizard", "sorcerer", "fighter", "rogue"]:
+            if class_choice not in [
+                "barbarian",
+                "cleric",
+                "wizard",
+                "sorcerer",
+                "fighter",
+                "rogue",
+            ]:
                 print("Not a valid class option, please try again.\n")
                 continue
 
@@ -62,15 +74,18 @@ def battle_loop():
 
     print("The party:")
     for player in players.values():
-        print(f"{player.name} - {player.race} {player.class_name} - level {player.level} - {player.hit_dice} hit dice - {player.max_hp} HP")
+        print(
+            f"{player.name} - {player.race} {player.class_name} - level {player.level} - {player.hit_dice} hit dice - {player.max_hp} HP"
+        )
     print()
-
 
     # enemy factory creation loop
     enemies = {}
-    num_enemies = int(input('How many enemies are there? '))
+    num_enemies = int(input("How many enemies are there? "))
     while True:
-        enemy_type = input('What type of enemy do you have?\nGoblin\nSkeleton\nDragon\n').lower().strip()
+        enemy_type = (
+            input("What type of enemy do you have?\nGoblin\nSkeleton\nDragon\n").lower().strip()
+        )
         if enemy_type not in ENEMIES:
             print("Please choose one of the available enemy types.")
             continue
@@ -81,21 +96,19 @@ def battle_loop():
             print(f"Spawned {num_enemies} {enemy}\n")
             break
 
-
     # enemy's battle loop
     while enemies[enemy] > 0:
         active_players = [p for p in players.values() if p.current_hp > 0]
 
         if not active_players:
-            print('All of your characters have died!')
-            print(f'{enemies[enemy]} enemies remained.')
+            print("All of your characters have died!")
+            print(f"{enemies[enemy]} enemies remained.")
             break
 
-        time.sleep(.5)
+        time.sleep(1)
         for _ in range(enemies[enemy]):
             if not enemy.passed_out:
                 enemy.cause_dmg(choice(active_players))
-
 
         # players' battle loop
         done = False
@@ -105,7 +118,7 @@ def battle_loop():
                 if not player.passed_out and not enemy.passed_out:
                     player.cause_dmg(enemy)
 
-                time.sleep(.5)
+                time.sleep(1)
 
                 if enemy.passed_out:
                     enemies[enemy] -= 1
@@ -113,10 +126,12 @@ def battle_loop():
                     if enemies[enemy] > 0:
                         enemy.passed_out = False
                         enemy.current_hp = enemy.max_hp
-                        print(f'Another enemy steps forward! {enemies[enemy]} of the enemies remain.\n')
+                        print(
+                            f"Another enemy steps forward! {enemies[enemy]} of the enemies remain.\n"
+                        )
 
                     else:
-                        print(f'Every enemy has been defeated!')
+                        print(f"Every enemy has been defeated!")
                         done = True
                         break
 
