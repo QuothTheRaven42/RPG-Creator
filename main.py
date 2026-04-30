@@ -5,7 +5,7 @@ Main script for the battle loop
 
 from classes import *
 from enemies import *
-# from character import import_character
+from character import *
 from random import choice
 import time
 
@@ -25,16 +25,27 @@ ENEMIES = {
 }
 
 
-def battle_loop():
+def import_character():
     filename = input('What is the full filename for this character sheet? ').lower().strip()
-    with open(
-            filename, "r"
-    ) as file:
+    with open(filename, "r") as file:
         for line in file:
             split_line = (line.strip().split(' - '))
             split_line[1] = split_line[1].split(' ')
+            split_line[2] = split_line[2].split(' ')[1]
             break
-        print(f'Name: {split_line[0]}\nRace: {split_line[1][0]}\nClass: {split_line[1][1]}\nLevel: {split_line[2]}')
+
+    name = split_line[0]
+    race = split_line[1][0]
+    class_name = split_line[1][1]
+    level = int(split_line[2][0])
+
+    return name, race, class_name, level
+
+
+def battle_loop():
+    # TESTING CHARACTER IMPORT
+    name, race, class_name, level = import_character()
+
 
     while True:
         try:

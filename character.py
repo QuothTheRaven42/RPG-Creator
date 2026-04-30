@@ -77,6 +77,7 @@ class Character(Combatant):
             race: str = input(
                 "\nChoose a race:\n--------\nDwarf\nElf\nGnome\nHalfling\nHuman\n"
             ).title()
+            print()
             if race not in ["Human", "Dwarf", "Elf", "Gnome", "Halfling"]:
                 print(f"{race} is not a valid option, please try again.\n")
                 continue
@@ -112,15 +113,6 @@ Charisma: {self.charisma}\n"""
         print(
             f"Character sheet for {self.name} the {self.class_name} has been saved as {self.name}_the_{self.race}_{self.class_name}_lvl{self.level}.txt."
         )
-
-
-    def import_character(self) -> None:
-        filename = input('What is the full filename for this character sheet? ').lower().strip()
-        with open(
-                filename, "r"
-        ) as file:
-            for line in file:
-                print(line.split(' - '))
 
 
     def rest(self) -> None:
