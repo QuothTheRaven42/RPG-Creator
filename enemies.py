@@ -10,7 +10,7 @@ def spawn_enemy(factory):
 
 
 class Enemy(Combatant):
-    """Based enemy class to inherit"""
+    """Base enemy class to inherit"""
 
     def __init__(self, name, class_name, max_hp, hit_dice):
         super().__init__(name, class_name, max_hp, hit_dice)
