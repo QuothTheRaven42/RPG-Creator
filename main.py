@@ -43,10 +43,6 @@ def import_character():
 
 
 def battle_loop():
-    # TESTING CHARACTER IMPORT
-    name, race, class_name, level = import_character()
-
-
     while True:
         try:
             amount = int(input("How many players? Enter a digit of up to 4. ").strip())
@@ -62,11 +58,7 @@ def battle_loop():
         break
 
 
-    # CHARACTER IMPORT GOES HERE
-    # ask how many characters would be imported
-    # have them enter the filename (tkinter?)
-    # then create the characters remaining
-    # and export the characters at the end of the battle
+    name, race, class_name, level = import_character()
 
 
     players = {}
