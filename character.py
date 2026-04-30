@@ -84,7 +84,7 @@ class Character(Combatant):
 
     @property
     def char_sheet(self) -> str:
-        char_sheet: str = f"""\n{self.name} - {self.race} {self.class_name} - level {self.level}
+        char_sheet: str = f"""{self.name} - {self.race} {self.class_name} - level {self.level}
 ---------------------------------
 Health: {self.current_hp}/{self.max_hp}
 Strength: {self.strength}
@@ -112,6 +112,16 @@ Charisma: {self.charisma}\n"""
         print(
             f"Character sheet for {self.name} the {self.class_name} has been saved as {self.name}_the_{self.race}_{self.class_name}_lvl{self.level}.txt."
         )
+
+
+    def import_character(self) -> None:
+        filename = input('What is the full filename for this character sheet? ').lower().strip()
+        with open(
+                filename, "r"
+        ) as file:
+            for line in file:
+                print(line.split(' - '))
+
 
     def rest(self) -> None:
         print("\nResting up......")

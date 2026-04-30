@@ -17,7 +17,7 @@ class Enemy(Combatant):
         self.hit_dice: int = hit_dice
 
     def __str__(self):
-        return f'{self.name} - {self.hit_dice} hit dice, {self.current_hp} / {self.max_hp} HP'
+        return f"{self.name} - {self.hit_dice} hit dice, {self.current_hp} / {self.max_hp} HP"
 
     def describe(self):
         return f"{self.name} (attack: {self.hit_dice})"
