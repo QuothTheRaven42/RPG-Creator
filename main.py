@@ -92,13 +92,13 @@ def battle_loop():
         break
 
     players = {}
-    import_answer = input('Would you like to import a character sheet? (y/n) ').strip().lower()
+    import_answer = input("Would you like to import a character sheet? (y/n) ").strip().lower()
     while True:
-        if import_answer == 'y':
+        if import_answer == "y":
             player = import_character()
             players[player.name] = player
-            another = input('Do you have another character to import? (y/n) ')
-            if another != 'y':
+            another = input("Do you have another character to import? (y/n) ")
+            if another != "y":
                 break
             else:
                 continue
