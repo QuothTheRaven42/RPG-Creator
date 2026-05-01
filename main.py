@@ -115,14 +115,7 @@ def battle_loop():
                 .strip()
             )
 
-            if class_choice not in [
-                "barbarian",
-                "cleric",
-                "wizard",
-                "sorcerer",
-                "fighter",
-                "rogue",
-            ]:
+            if class_choice not in CLASSES:
                 print("Not a valid class option, please try again.\n")
                 continue
 

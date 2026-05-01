@@ -1,3 +1,5 @@
+"""Tests for character inventory and experience behavior."""
+
 import unittest
 from unittest.mock import patch
 
@@ -7,7 +9,10 @@ from enemies import Goblin
 
 
 class CharacterTests(unittest.TestCase):
+    """Exercise character-specific gameplay behavior."""
+
     def test_missing_potion_does_not_heal(self) -> None:
+        """Using an absent potion should not change the character's HP."""
         with (
             patch("character.Character.display_sheet", autospec=True),
             patch("character.randint", return_value=10),
@@ -22,6 +27,7 @@ class CharacterTests(unittest.TestCase):
             self.assertEqual(cleric.current_hp, 1)
 
     def test_cleric_small_potion_bonus_applies(self) -> None:
+        """Clerics should receive their healing bonus from small potions."""
         with (
             patch("character.Character.display_sheet", autospec=True),
             patch("character.randint", return_value=10),
@@ -36,6 +42,7 @@ class CharacterTests(unittest.TestCase):
             self.assertEqual(cleric.current_hp, 6)
 
     def test_character_attack_grants_experience(self) -> None:
+        """Successful attacks should award experience to the attacker."""
         with (
             patch("character.Character.display_sheet", autospec=True),
             patch("character.randint", return_value=10),

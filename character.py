@@ -19,6 +19,7 @@ class Character(Combatant):
     """
 
     def __init__(self, name, race, hit_dice: int = 0):
+        """Initialize a character with randomized base stats and starter items."""
         self.class_name: str = self.__class__.__name__.lower()
         self.name: str = name
         self.race: str = race
@@ -70,10 +71,12 @@ class Character(Combatant):
         }
 
     def __str__(self) -> str:
+        """Return the formatted character sheet."""
         return self.char_sheet
 
     @classmethod
     def from_prompt(cls):
+        """Prompt the user for a name and race, then create a character."""
         name: str = input(f"What is your {cls.__name__}'s name? ").title()
         while True:
             race: str = input(
@@ -87,6 +90,7 @@ class Character(Combatant):
 
     @property
     def char_sheet(self) -> str:
+        """Build the formatted character sheet text."""
         char_sheet: str = f"""{self.name} - {self.race} {self.class_name} - level {self.level}
 ---------------------------------
 Health: {self.current_hp}/{self.max_hp}
@@ -101,16 +105,19 @@ Charisma: {self.charisma}\n"""
         return char_sheet
 
     def display_sheet(self) -> None:
+        """Print the current character sheet to the console."""
         print(f"\nYour character sheet for {self.name} the {self.class_name}:")
         print(f"{self.char_sheet}")
 
     def cause_dmg(self, target) -> int:
+        """Deal damage to a target and award experience on a successful hit."""
         dmg = super().cause_dmg(target)
         if dmg > 0:
             self.gain_exp()
         return dmg
 
     def export_char_sheet(self) -> None:
+        """Write the character sheet and inventory to a text file."""
         with open(
             f"{self.name}_the_{self.race}_{self.class_name}_lvl{self.level}.txt", "w"
         ) as file:
@@ -124,6 +131,7 @@ Charisma: {self.charisma}\n"""
         )
 
     def rest(self) -> None:
+        """Restore the character to full health and clear passed-out state."""
         print("\nResting up......")
         self.current_hp = self.max_hp
         self.passed_out = False
@@ -131,6 +139,7 @@ Charisma: {self.charisma}\n"""
         print(f"Life total: {self.current_hp}/{self.max_hp}\n")
 
     def use_item(self, item: str) -> None:
+        """Consume an inventory item and apply any of its effects."""
         if item not in self.inventory:
             print(f"{item} is not in {self.name}'s inventory.\n")
             return
@@ -161,6 +170,7 @@ Charisma: {self.charisma}\n"""
             self.passed_out: bool = False
 
     def add_item(self, item: str) -> None:
+        """Add one copy of an item to the inventory."""
         if item in self.inventory:
             self.inventory[item] += 1
         else:
@@ -168,6 +178,7 @@ Charisma: {self.charisma}\n"""
         print(f"{item} added to the inventory.")
 
     def view_inventory(self) -> None:
+        """Print the inventory contents."""
         if self.inventory:
             lines: str = "\n".join(f"{value} {key}" for key, value in self.inventory.items())
             print(f"{self.name}'s inventory:\n{lines}\n")
@@ -175,6 +186,7 @@ Charisma: {self.charisma}\n"""
             print(f"No items in {self.name}'s inventory.\n")
 
     def gain_exp(self, multiplier: int = 1) -> str | None:
+        """Award experience and level up the character when the threshold is met."""
         if self.passed_out:
             return f"{self.name} is passed out and cannot gain experience."
 

@@ -5,8 +5,10 @@ from random import randint
 
 
 class Combatant:
+    """Shared combat behavior for player characters and enemies."""
 
     def __init__(self, name, class_name, max_hp, hit_dice):
+        """Initialize the common combat state for a battler."""
         self.hit_dice = hit_dice
         self.passed_out: bool = False
         self.name = name
@@ -15,6 +17,7 @@ class Combatant:
         self.current_hp: int = max_hp
 
     def take_dmg(self, dmg: int) -> None:
+        """Apply incoming damage and mark the combatant passed out at zero HP."""
         if self.passed_out or self.current_hp <= 0:
             self.current_hp = 0
             self.passed_out = True
@@ -31,6 +34,7 @@ class Combatant:
             print(f"Remaining life for {self.name}: {self.current_hp}/{self.max_hp}\n")
 
     def cause_dmg(self, target) -> int:
+        """Roll attack damage, apply it to the target, and return the amount dealt."""
         if self.passed_out:
             print(f"{self.name} is passed out and cannot attack.")
             return 0
@@ -47,4 +51,5 @@ class Combatant:
 
     @staticmethod
     def roll_dice(d_num: int) -> int:
+        """Return the result of rolling one die with the given number of sides."""
         return randint(1, d_num)

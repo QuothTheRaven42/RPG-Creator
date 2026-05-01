@@ -1,3 +1,5 @@
+"""Tests for the main battle-loop entry points."""
+
 import contextlib
 import io
 import unittest
@@ -8,7 +10,10 @@ import main
 
 
 class MainTests(unittest.TestCase):
+    """Exercise high-level game flow helpers."""
+
     def test_import_character_restores_experience_and_passed_out_state(self) -> None:
+        """Imported character sheets should restore saved combat state."""
         character_sheet = Path(__file__).parent / "fixtures" / "fallen_fighter.txt"
 
         with patch("builtins.input", return_value=str(character_sheet)):
@@ -19,6 +24,7 @@ class MainTests(unittest.TestCase):
         self.assertEqual(player.inventory, {"torch": 1, "rations": 2})
 
     def test_battle_loop_retries_invalid_enemy_count_input(self) -> None:
+        """The battle loop should keep prompting until enemy count input is valid."""
         responses = iter(
             [
                 "1",
@@ -35,6 +41,7 @@ class MainTests(unittest.TestCase):
         )
 
         def fake_input(prompt: str = "") -> str:
+            """Return the next canned prompt response for the battle loop."""
             return next(responses)
 
         buffer = io.StringIO()
