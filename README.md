@@ -4,7 +4,7 @@
 
 ## Features
 
-- Import a saved character sheet for the first party member.
+- Import a saved character sheet for any number of party members (up to the default 6).
 - Create additional `Barbarian`, `Cleric`, `Wizard`, `Sorcerer`, `Fighter`, or `Rogue` characters interactively.
 - Choose from `Human`, `Dwarf`, `Elf`, `Gnome`, and `Halfling`.
 - Roll randomized HP and core ability scores, then apply race and class modifiers.
