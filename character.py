@@ -16,12 +16,12 @@ class Character(Combatant):
         char_sheet (str): Name, race, class, level, and stats.
     """
 
-    def __init__(self, name, race, hit_dice):
+    def __init__(self, name, race, hit_dice: int = 0):
         self.class_name: str = self.__class__.__name__.lower()
         self.name: str = name
         self.race: str = race
         self.max_hp: int = randint(8, 20)
-        super().__init__(self.name, self.class_name, hit_dice, hit_dice)
+        super().__init__(self.name, self.class_name, self.max_hp, hit_dice)
 
         self.strength: int = randint(5, 15)
         self.dexterity: int = randint(5, 15)
@@ -163,7 +163,6 @@ Charisma: {self.charisma}\n"""
             print(f"{self.name}'s inventory:\n{lines}\n")
         else:
             print(f"No items in {self.name}'s inventory.\n")
-
 
     def gain_exp(self, multiplier: int = 1) -> str | None:
         if self.passed_out:

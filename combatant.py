@@ -1,8 +1,8 @@
 """Combatant class inherited by characters and enemies for battling."""
 
-from random import randint
 from __future__ import annotations
 from typing import TYPE_CHECKING
+from random import randint
 
 if TYPE_CHECKING:
     from character import Character
@@ -47,7 +47,6 @@ class Combatant:
             if isinstance(self, Character):
                 self.gain_exp()
             return dmg
-
 
     @staticmethod
     def roll_dice(d_num: int) -> int:

@@ -27,15 +27,15 @@ def import_character():
     filename: str = input("What is the full filename for this character sheet? ").lower().strip()
     with open(filename, "r") as file:
         for line in file:
-            split_line = line.strip().split(" - ")
-            split_line[1] = split_line[1].split(" ")
-            split_line[2] = split_line[2].split(" ")[1]
+            split_line: list[str] = line.strip().split(" - ")
+            race_and_class = split_line[1].split(" ")
+            level_number = split_line[2].split(" ")[1]
             break
 
     name = split_line[0]
-    race = split_line[1][0]
-    class_name = split_line[1][1]
-    level = int(split_line[2][0])
+    race = race_and_class[0]
+    class_name = race_and_class[1]
+    level = int(level_number)
 
     return name, race, class_name, level
 
@@ -121,7 +121,7 @@ def battle_loop():
                 time.sleep(2)
 
         # players' battle loop
-        active_players: list = [p for p in players.values() if p.current_hp > 0]
+        active_players = [p for p in players.values() if p.current_hp > 0]
         done: bool = False
 
         for player in active_players:
@@ -134,8 +134,8 @@ def battle_loop():
                     enemies[enemy] -= 1
 
                     if enemies[enemy] > 0:
-                        enemy.passed_out: bool = False
-                        enemy.current_hp: int = enemy.max_hp
+                        enemy.passed_out = False
+                        enemy.current_hp = enemy.max_hp
                         print(
                             f"Another enemy steps forward! {enemies[enemy]} of the enemies remain.\n"
                         )
@@ -144,7 +144,7 @@ def battle_loop():
                     else:
                         print(f"Every enemy has been defeated!")
                         time.sleep(2)
-                        done: bool = True
+                        done = True
                         break
             if done:
                 break
