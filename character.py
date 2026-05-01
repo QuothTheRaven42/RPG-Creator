@@ -90,6 +90,7 @@ class Character(Combatant):
         char_sheet: str = f"""{self.name} - {self.race} {self.class_name} - level {self.level}
 ---------------------------------
 Health: {self.current_hp}/{self.max_hp}
+Experience: {self.exp}
 Strength: {self.strength}
 Dexterity: {self.dexterity}
 Constitution: {self.constitution}

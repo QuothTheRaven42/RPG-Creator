@@ -1,4 +1,4 @@
-Barbara - Dwarf barbarian - level 1
+Barbara - Dwarf barbarian - level 3
 ---------------------------------
 Health: 19/20
 Strength: 14

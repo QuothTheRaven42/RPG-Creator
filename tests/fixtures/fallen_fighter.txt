@@ -1,0 +1,14 @@
+Fallen - Human fighter - level 2
+---------------------------------
+Health: 0/18
+Experience: 40
+Strength: 10
+Dexterity: 11
+Constitution: 12
+Intelligence: 9
+Wisdom: 8
+Charisma: 7
+
+Inventory:
+1 torch
+2 rations

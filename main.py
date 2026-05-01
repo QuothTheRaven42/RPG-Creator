@@ -26,22 +26,56 @@ ENEMIES: dict = {
 
 
 def import_character():
-    """UNDER CONSTRUCTION, NOT IMPLEMENTED"""
-    filename: str = input("What is the full filename for this character sheet? ").lower().strip()
+    """Parse character sheet from text file and reconstruct the character."""
+    filename: str = input("What is the full filename for this character sheet? ").strip()
     with open(filename, "r") as file:
-        for line in file:
-            split_line: list[str] = line.strip().split(" - ")
-            race_and_class: list[str] = split_line[1].split(" ")
-            level_number: str = split_line[2].split(" ")[1]
-            break
+        file_list = [line.rstrip("\n") for line in file]
 
-    print(split_line, race_and_class, level_number)
+    split_line: list[str] = file_list[0].strip().split(" - ")
+    race_and_class: list[str] = split_line[1].split(" ", maxsplit=1)
+    level_number: str = split_line[2].split(" ")[1]
+
     name = split_line[0]
     race = race_and_class[0]
     class_name = race_and_class[1]
     level = int(level_number)
 
-    return name, race, class_name, level
+    fields: dict[str, str] = {}
+    items: dict[str, int] = {}
+    in_inventory = False
+
+    for line in file_list[1:]:
+        stripped = line.strip()
+        if not stripped or set(stripped) == {"-"}:
+            continue
+        if stripped == "Inventory:":
+            in_inventory = True
+            continue
+        if in_inventory:
+            quantity, item_name = stripped.split(" ", maxsplit=1)
+            items[item_name] = int(quantity)
+            continue
+
+        label, value = stripped.split(": ", maxsplit=1)
+        fields[label] = value
+
+    current, hp = (int(value) for value in fields["Health"].split("/", maxsplit=1))
+
+    player = CLASSES[class_name](name, race, display=False)
+    player.level = level
+    player.exp = int(fields.get("Experience", 0))
+    player.current_hp = current
+    player.max_hp = hp
+    player.passed_out = current <= 0
+    player.strength = int(fields["Strength"])
+    player.dexterity = int(fields["Dexterity"])
+    player.constitution = int(fields["Constitution"])
+    player.intelligence = int(fields["Intelligence"])
+    player.wisdom = int(fields["Wisdom"])
+    player.charisma = int(fields["Charisma"])
+    player.inventory = items
+
+    return player
 
 
 def battle_loop():
@@ -57,14 +91,15 @@ def battle_loop():
             continue
         break
 
-    # name, race, class_name, level = import_character()
+    player = import_character()
 
     players = {}
+    players[player.name] = player
     for num in range(1, amount + 1):
         while True:
             class_choice: str = (
                 input(
-                    f"Which class for player #{num}?\nBarbarian, Cleric, Wizard, Sorcerer, Fighter, or Rogue "
+                    f"Which class for player #{len(players)+1}?\nBarbarian, Cleric, Wizard, Sorcerer, Fighter, or Rogue "
                 )
                 .lower()
                 .strip()
@@ -170,7 +205,7 @@ def battle_loop():
         for character in players.values():
             character.export_char_sheet()
     else:
-        print("Characters not saved. Game over.")
+        print("Characters not saved. Thanks for playing!")
 
 
 if __name__ == "__main__":
