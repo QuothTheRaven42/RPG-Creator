@@ -19,11 +19,14 @@ class Combatant:
         self.current_hp: int = max_hp
 
     def take_dmg(self, dmg: int) -> None:
-        if self.current_hp > 0:
-            self.current_hp -= dmg
-        if self.passed_out:
+        if self.passed_out or self.current_hp <= 0:
+            self.current_hp = 0
+            self.passed_out = True
             print(f"{self.name} is passed out and cannot take damage.")
-        elif self.current_hp < 0:
+            return
+
+        self.current_hp -= dmg
+        if self.current_hp <= 0:
             self.current_hp = 0
             self.passed_out = True
             print(f"{self.name} took {dmg} damage and has passed out!\n")
@@ -44,7 +47,7 @@ class Combatant:
             dmg = Combatant.roll_dice(self.hit_dice)
             print(f"{self.name} attacks for {dmg} hp!")
             target.take_dmg(dmg)
-            if isinstance(self, Character):
+            if hasattr(self, "gain_exp"):
                 self.gain_exp()
             return dmg
 

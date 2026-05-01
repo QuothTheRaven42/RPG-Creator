@@ -24,14 +24,16 @@ ENEMIES: dict = {
 
 
 def import_character():
+    """UNDER CONSTRUCTION, NOT IMPLEMENTED"""
     filename: str = input("What is the full filename for this character sheet? ").lower().strip()
     with open(filename, "r") as file:
         for line in file:
             split_line: list[str] = line.strip().split(" - ")
-            race_and_class = split_line[1].split(" ")
-            level_number = split_line[2].split(" ")[1]
+            race_and_class: list[str] = split_line[1].split(" ")
+            level_number: str = split_line[2].split(" ")[1]
             break
 
+    print(split_line, race_and_class, level_number)
     name = split_line[0]
     race = race_and_class[0]
     class_name = race_and_class[1]
@@ -44,7 +46,7 @@ def battle_loop():
     """Create characters and enemies; go through a full battle."""
     while True:
         try:
-            amount: int = int(input("How many players? Enter a digit of up to 4. ").strip())
+            amount: int = int(input("How many players? Enter a digit of up to 6. ").strip())
         except ValueError:
             print("Not a number, please try again.\n")
             continue
@@ -90,7 +92,17 @@ def battle_loop():
 
     # enemy factory creation loop
     enemies = {}
-    num_enemies = int(input("How many enemies are there? "))
+    while True:
+        try:
+            num_enemies = int(input("How many enemies are there? ").strip())
+        except ValueError:
+            print("Not a number, please try again.\n")
+            continue
+        if num_enemies <= 0:
+            print("Please enter at least 1 enemy.\n")
+            continue
+        break
+
     while True:
         enemy_type = (
             input("What type of enemy do you have?\nGoblin\nSkeleton\nDragon\n").lower().strip()

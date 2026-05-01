@@ -123,7 +123,8 @@ Charisma: {self.charisma}\n"""
 
     def use_item(self, item: str) -> None:
         if item not in self.inventory:
-            print(f"{item} is not {self.name}'s inventory.\n")
+            print(f"{item} is not in {self.name}'s inventory.\n")
+            return
         elif self.inventory[item] == 1:
             del self.inventory[item]
             print(f"{self.name} the {self.class_name} used {item} from their inventory.")
@@ -135,7 +136,7 @@ Charisma: {self.charisma}\n"""
         # healing items
         if item == "small health potion":
             num: int = Character.roll_dice(6)
-            if self.class_name == "Cleric":
+            if self.class_name == "cleric":
                 num += 4
             self.current_hp = min(self.current_hp + num, self.max_hp)
             print(f"small health potion used - +{num} health gained!")
@@ -143,7 +144,7 @@ Charisma: {self.charisma}\n"""
             self.passed_out = False
         elif item == "large health potion":
             num = Character.roll_dice(20) + Character.roll_dice(6)
-            if self.class_name == "Cleric":
+            if self.class_name == "cleric":
                 num += 12
             self.current_hp: int = min(self.current_hp + num, self.max_hp)
             print(f"large health potion used - +{num} health gained!")
