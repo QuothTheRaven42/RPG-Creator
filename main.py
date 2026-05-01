@@ -105,7 +105,7 @@ def battle_loop():
         else:
             break
 
-    for num in range(1, ((amount + 1) - len(players))):
+    for _ in range(amount - len(players)):
         while True:
             class_choice: str = (
                 input(
