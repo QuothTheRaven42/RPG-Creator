@@ -39,7 +39,7 @@ class Sorcerer(Character, Combatant):
     def __init__(self, name, race):
         super().__init__(name, race, 16)
         self.wisdom += 3
-        self.max_hp += 3
+        self.intelligence += 3
         self.dexterity -= 3
         self.current_hp: int = self.max_hp
         self.display_sheet()
