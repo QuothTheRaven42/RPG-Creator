@@ -1,6 +1,8 @@
 """The Character class for setting stats, displaying character sheet, and various character actions."""
 
-from combatant import *
+from random import randint
+
+from combatant import Combatant
 
 
 class Character(Combatant):
@@ -100,6 +102,12 @@ Charisma: {self.charisma}\n"""
     def display_sheet(self) -> None:
         print(f"\nYour character sheet for {self.name} the {self.class_name}:")
         print(f"{self.char_sheet}")
+
+    def cause_dmg(self, target) -> int:
+        dmg = super().cause_dmg(target)
+        if dmg > 0:
+            self.gain_exp()
+        return dmg
 
     def export_char_sheet(self) -> None:
         with open(

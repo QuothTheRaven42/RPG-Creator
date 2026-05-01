@@ -2,10 +2,12 @@
 A Python RPG system - Main script for the battle loop
 """
 
-from classes import *
-from enemies import *
-from random import choice
 import time
+from random import choice
+
+from character import Character
+from classes import Barbarian, Cleric, Fighter, Rogue, Sorcerer, Wizard
+from enemies import DragonFactory, Enemy, GoblinFactory, SkeletonFactory, spawn_enemy
 
 CLASSES: dict = {
     "barbarian": Barbarian,

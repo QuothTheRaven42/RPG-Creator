@@ -1,7 +1,10 @@
 """Create monster combatants using factories."""
 
+from __future__ import annotations
+
 from abc import ABC, abstractmethod
-from combatant import *
+
+from combatant import Combatant
 
 
 def spawn_enemy(factory: EnemyFactory) -> Enemy:

@@ -1,8 +1,8 @@
 """Create characters from Barbarian, Cleric, Wizard, Sorcerer, Fighter, and Rogue.
 Includes stat bonuses for each class"""
 
-from character import *
-from combatant import *
+from character import Character
+from combatant import Combatant
 
 
 class Barbarian(Character, Combatant):
