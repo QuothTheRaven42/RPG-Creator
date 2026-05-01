@@ -114,7 +114,6 @@ Charisma: {self.charisma}\n"""
             f"Character sheet for {self.name} the {self.class_name} has been saved as {self.name}_the_{self.race}_{self.class_name}_lvl{self.level}.txt."
         )
 
-
     def rest(self) -> None:
         print("\nResting up......")
         self.current_hp = self.max_hp

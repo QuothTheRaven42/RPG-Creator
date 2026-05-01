@@ -1,11 +1,9 @@
 """
-A Python RPG system
-Main script for the battle loop
+A Python RPG system - Main script for the battle loop
 """
 
 from classes import *
 from enemies import *
-from character import *
 from random import choice
 import time
 
@@ -26,12 +24,12 @@ ENEMIES = {
 
 
 def import_character():
-    filename = input('What is the full filename for this character sheet? ').lower().strip()
+    filename = input("What is the full filename for this character sheet? ").lower().strip()
     with open(filename, "r") as file:
         for line in file:
-            split_line = (line.strip().split(' - '))
-            split_line[1] = split_line[1].split(' ')
-            split_line[2] = split_line[2].split(' ')[1]
+            split_line = line.strip().split(" - ")
+            split_line[1] = split_line[1].split(" ")
+            split_line[2] = split_line[2].split(" ")[1]
             break
 
     name = split_line[0]
@@ -43,23 +41,19 @@ def import_character():
 
 
 def battle_loop():
+    """Create characters and enemies; go through a full battle."""
     while True:
         try:
             amount = int(input("How many players? Enter a digit of up to 4. ").strip())
-        except TypeError:
+        except ValueError:
             print("Not a number, please try again.\n")
             continue
-
         if amount <= 0 or amount > 6:
             print("Not a valid amount, please try again.\n")
             continue
-
-        amount = int(amount)
         break
 
-
     name, race, class_name, level = import_character()
-
 
     players = {}
     for num in range(1, amount + 1):
@@ -124,7 +118,7 @@ def battle_loop():
         for _ in range(enemies[enemy]):
             if not enemy.passed_out:
                 enemy.cause_dmg(choice(active_players))
-                time.sleep(1.5)
+                time.sleep(2)
 
         # players' battle loop
         active_players = [p for p in players.values() if p.current_hp > 0]
@@ -134,7 +128,7 @@ def battle_loop():
             for enemy in enemies.keys():
                 if not player.passed_out and not enemy.passed_out:
                     player.cause_dmg(enemy)
-                    time.sleep(1.5)
+                    time.sleep(2)
 
                 if enemy.passed_out:
                     enemies[enemy] -= 1
@@ -145,23 +139,25 @@ def battle_loop():
                         print(
                             f"Another enemy steps forward! {enemies[enemy]} of the enemies remain.\n"
                         )
-                        time.sleep(1.5)
+                        time.sleep(2)
 
                     else:
                         print(f"Every enemy has been defeated!")
-                        time.sleep(1.5)
+                        time.sleep(2)
                         done = True
                         break
-
             if done:
                 break
 
-    export_choice = input('Would you like to export your character sheets? Type "yes" or "y" ').lower().strip()
-    if export_choice == 'yes' or export_choice == 'y':
+    export_choice = (
+        input('Would you like to export your character sheets? Type "yes" or "y" ').lower().strip()
+    )
+    if export_choice == "yes" or export_choice == "y":
         for character in players.values():
             character.export_char_sheet()
     else:
-        print('Characters not saved. Game over.')
+        print("Characters not saved. Game over.")
+
 
 if __name__ == "__main__":
     battle_loop()
