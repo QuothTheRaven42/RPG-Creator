@@ -134,7 +134,7 @@ This repository includes automated `unittest` coverage for core behavior such as
 
 ## Current Limitations
 
-- The CLI party flow currently starts with one imported character and then creates the remaining party members interactively.
+- The CLI party flow currently asks about importing characters, imports up to 6 characters, and creates the remaining party members interactively.
 - Each encounter supports only one enemy type.
 - Character creation is fully randomized; there is no manual stat allocation.
 - Exported character sheets are plain text only.
