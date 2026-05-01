@@ -91,11 +91,21 @@ def battle_loop():
             continue
         break
 
-    player = import_character()
-
     players = {}
-    players[player.name] = player
-    for num in range(1, amount + 1):
+    import_answer = input('Would you like to import a character sheet? (y/n) ').strip().lower()
+    while True:
+        if import_answer == 'y':
+            player = import_character()
+            players[player.name] = player
+            another = input('Do you have another character to import? (y/n) ')
+            if another != 'y':
+                break
+            else:
+                continue
+        else:
+            break
+
+    for num in range(1, ((amount + 1) - len(players))):
         while True:
             class_choice: str = (
                 input(
