@@ -4,7 +4,7 @@ from abc import ABC, abstractmethod
 from combatant import *
 
 
-def spawn_enemy(factory):
+def spawn_enemy(factory: EnemyFactory) -> Enemy:
     enemy = factory.create()
     return enemy
 
@@ -30,47 +30,47 @@ class EnemyFactory(ABC):
     """Base Factory class to inherit"""
 
     @abstractmethod
-    def create(self):
+    def create(self) -> Enemy:
         pass
 
 
 class GoblinFactory(EnemyFactory):
     """The factory for the Goblin class"""
 
-    def create(self):
+    def create(self) -> Enemy:
         return Goblin()
 
 
 class SkeletonFactory(EnemyFactory):
     """The factory for the Skeleton class"""
 
-    def create(self):
+    def create(self) -> Enemy:
         return Skeleton()
 
 
 class DragonFactory(EnemyFactory):
     """The factory for the Dragon class"""
 
-    def create(self):
+    def create(self) -> Enemy:
         return Dragon()
 
 
 class Goblin(Enemy):
     """The Goblin class"""
 
-    def __init__(self):
+    def __init__(self) -> None:
         super().__init__("Goblin", "Goblin", 10, 5)
 
 
 class Skeleton(Enemy):
     """The Skeleton class"""
 
-    def __init__(self):
+    def __init__(self) -> None:
         super().__init__("Skeleton", "Skeleton", 15, 10)
 
 
 class Dragon(Enemy):
     """The Dragon class"""
 
-    def __init__(self):
+    def __init__(self) -> None:
         super().__init__("Dragon", "Dragon", 100, 30)

@@ -1,0 +1,16 @@
+David - Elf sorcerer - level 1
+---------------------------------
+Health: 16/19
+Strength: 6
+Dexterity: 14
+Constitution: 12
+Intelligence: 9
+Wisdom: 13
+Charisma: 7
+
+Inventory:
+1 50 ft rope
+4 small health potion
+2 torch
+3 water
+1 rations
