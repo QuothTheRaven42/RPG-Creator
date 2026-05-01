@@ -57,7 +57,7 @@ When you run `main.py`, the script will:
 | Barbarian | `20` | `+3 STR`, `+3 CON`, `-3 INT` |
 | Cleric | `6` | `+3 CON`, `+3 WIS`, `-3 CHA` |
 | Wizard | `8` | `+3 INT`, `+3 CHA`, `-3 max HP` |
-| Sorcerer | `16` | `+3 WIS`, `+3 max HP`, `-3 DEX` |
+| Sorcerer | `16` | `+3 WIS`, `+3 INT`, `-3 DEX` |
 | Fighter | `14` | `+3 STR`, `+3 CHA`, `-3 WIS` |
 | Rogue | `8` | `+3 DEX`, `+3 INT`, `-3 CON` |
 
