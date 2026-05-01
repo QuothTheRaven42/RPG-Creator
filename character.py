@@ -142,7 +142,7 @@ Charisma: {self.charisma}\n"""
             print(f"Life total: {self.current_hp}\n")
             self.passed_out = False
         elif item == "large health potion":
-            num: int = Character.roll_dice(20) + Character.roll_dice(6)
+            num = Character.roll_dice(20) + Character.roll_dice(6)
             if self.class_name == "Cleric":
                 num += 12
             self.current_hp: int = min(self.current_hp + num, self.max_hp)
@@ -163,3 +163,29 @@ Charisma: {self.charisma}\n"""
             print(f"{self.name}'s inventory:\n{lines}\n")
         else:
             print(f"No items in {self.name}'s inventory.\n")
+
+
+    def gain_exp(self, multiplier: int = 1) -> str | None:
+        if self.passed_out:
+            return f"{self.name} is passed out and cannot gain experience."
+
+        experience = 10 * multiplier
+        self.exp += experience
+        print(f"{self.name} has gained {experience} experience points and has {self.exp} total.\n")
+
+        if self.exp >= 50 * self.level:
+            self.exp = 0
+            self.level += 1
+            print(f"\n{self.name} has gained a level...")
+            print(f"They are now level {self.level}!\n")
+
+            self.max_hp += round(2.5 * (self.constitution * 0.1))
+            self.strength += round(1 * (self.strength * 0.08))
+            self.dexterity += round(1 * (self.dexterity * 0.08))
+            self.constitution += round(1 * (self.constitution * 0.08))
+            self.intelligence += round(1 * (self.intelligence * 0.08))
+            self.wisdom += round(1 * (self.wisdom * 0.08))
+            self.charisma += round(1 * (self.charisma * 0.08))
+            self.current_hp = self.max_hp
+
+        return None

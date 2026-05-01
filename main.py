@@ -7,7 +7,7 @@ from enemies import *
 from random import choice
 import time
 
-CLASSES = {
+CLASSES: dict = {
     "barbarian": Barbarian,
     "cleric": Cleric,
     "wizard": Wizard,
@@ -16,7 +16,7 @@ CLASSES = {
     "rogue": Rogue,
 }
 
-ENEMIES = {
+ENEMIES: dict = {
     "goblin": GoblinFactory,
     "skeleton": SkeletonFactory,
     "dragon": DragonFactory,
@@ -24,7 +24,7 @@ ENEMIES = {
 
 
 def import_character():
-    filename = input("What is the full filename for this character sheet? ").lower().strip()
+    filename: str = input("What is the full filename for this character sheet? ").lower().strip()
     with open(filename, "r") as file:
         for line in file:
             split_line = line.strip().split(" - ")
@@ -44,7 +44,7 @@ def battle_loop():
     """Create characters and enemies; go through a full battle."""
     while True:
         try:
-            amount = int(input("How many players? Enter a digit of up to 4. ").strip())
+            amount: int = int(input("How many players? Enter a digit of up to 4. ").strip())
         except ValueError:
             print("Not a number, please try again.\n")
             continue
@@ -53,12 +53,12 @@ def battle_loop():
             continue
         break
 
-    name, race, class_name, level = import_character()
+    # name, race, class_name, level = import_character()
 
     players = {}
     for num in range(1, amount + 1):
         while True:
-            class_choice = (
+            class_choice: str = (
                 input(
                     f"Which class for player #{num}?\nBarbarian, Cleric, Wizard, Sorcerer, Fighter, or Rogue "
                 )
@@ -77,7 +77,7 @@ def battle_loop():
                 print("Not a valid class option, please try again.\n")
                 continue
 
-            character = CLASSES[class_choice].from_prompt()
+            character: Character = CLASSES[class_choice].from_prompt()
             players[character.name] = character
             break
 
@@ -100,7 +100,7 @@ def battle_loop():
             continue
 
         else:
-            enemy = spawn_enemy(ENEMIES[enemy_type]())
+            enemy: Enemy = spawn_enemy(ENEMIES[enemy_type]())
             enemies[enemy] = num_enemies
             print(f"Spawned {num_enemies} {enemy}\n")
             time.sleep(2)
@@ -108,7 +108,7 @@ def battle_loop():
 
     # enemy's battle loop
     while enemies[enemy] > 0:
-        active_players = [p for p in players.values() if p.current_hp > 0]
+        active_players: list = [p for p in players.values() if p.current_hp > 0]
 
         if not active_players:
             print("All of your characters have died!")
@@ -121,8 +121,8 @@ def battle_loop():
                 time.sleep(2)
 
         # players' battle loop
-        active_players = [p for p in players.values() if p.current_hp > 0]
-        done = False
+        active_players: list = [p for p in players.values() if p.current_hp > 0]
+        done: bool = False
 
         for player in active_players:
             for enemy in enemies.keys():
@@ -134,8 +134,8 @@ def battle_loop():
                     enemies[enemy] -= 1
 
                     if enemies[enemy] > 0:
-                        enemy.passed_out = False
-                        enemy.current_hp = enemy.max_hp
+                        enemy.passed_out: bool = False
+                        enemy.current_hp: int = enemy.max_hp
                         print(
                             f"Another enemy steps forward! {enemies[enemy]} of the enemies remain.\n"
                         )
@@ -144,12 +144,12 @@ def battle_loop():
                     else:
                         print(f"Every enemy has been defeated!")
                         time.sleep(2)
-                        done = True
+                        done: bool = True
                         break
             if done:
                 break
 
-    export_choice = (
+    export_choice: str = (
         input('Would you like to export your character sheets? Type "yes" or "y" ').lower().strip()
     )
     if export_choice == "yes" or export_choice == "y":

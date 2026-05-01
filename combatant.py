@@ -1,6 +1,11 @@
 """Combatant class inherited by characters and enemies for battling."""
 
 from random import randint
+from __future__ import annotations
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from character import Character
 
 
 class Combatant:
@@ -26,7 +31,7 @@ class Combatant:
             print(f"{self.name} has taken {dmg} points of damage!")
             print(f"Remaining life for {self.name}: {self.current_hp}/{self.max_hp}\n")
 
-    def cause_dmg(self, target: Character) -> int:
+    def cause_dmg(self, target) -> int:
         if self.passed_out:
             print(f"{self.name} is passed out and cannot attack.")
             return 0
@@ -39,34 +44,10 @@ class Combatant:
             dmg = Combatant.roll_dice(self.hit_dice)
             print(f"{self.name} attacks for {dmg} hp!")
             target.take_dmg(dmg)
-            if hasattr(self, "exp"):
+            if isinstance(self, Character):
                 self.gain_exp()
             return dmg
 
-    def gain_exp(self, multiplier: int = 1) -> str | None:
-        if self.passed_out:
-            return f"{self.name} is passed out and cannot gain experience."
-
-        experience = 10 * multiplier
-        self.exp += experience
-        print(f"{self.name} has gained {experience} experience points and has {self.exp} total.\n")
-
-        if self.exp >= 50 * self.level:
-            self.exp: int = 0
-            self.level += 1
-            print(f"\n{self.name} has gained a level...")
-            print(f"They are now level {self.level}!\n")
-
-            self.max_hp += round(2.5 * (self.constitution * 0.1))
-            self.strength += round(1 * (self.strength * 0.08))
-            self.dexterity += round(1 * (self.dexterity * 0.08))
-            self.constitution += round(1 * (self.constitution * 0.08))
-            self.intelligence += round(1 * (self.intelligence * 0.08))
-            self.wisdom += round(1 * (self.wisdom * 0.08))
-            self.charisma += round(1 * (self.charisma * 0.08))
-            self.current_hp = self.max_hp
-
-        return None
 
     @staticmethod
     def roll_dice(d_num: int) -> int:
