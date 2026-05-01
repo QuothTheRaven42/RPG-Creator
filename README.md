@@ -1,11 +1,11 @@
 # RPG Creator
 
-`RPG Creator` is a command-line Python project for generating fantasy RPG characters and running a simple party-vs-enemy battle loop. The codebase focuses on a small set of tabletop-style mechanics: randomized stats, race and class bonuses, inventory, combat, experience gain, level-ups, and character-sheet export.
+`RPG Creator` is a command-line Python project for generating fantasy RPG characters and running a simple party-vs-enemy battle loop. The codebase focuses on a small set of tabletop-style mechanics: randomized stats, race and class bonuses, inventory, combat, experience gain, level-ups, character-sheet export, and character-sheet import.
 
 ## Features
 
-- Create a party of `1` to `6` player characters.
-- Play as `Barbarian`, `Cleric`, `Wizard`, `Sorcerer`, `Fighter`, or `Rogue`.
+- Import a saved character sheet for the first party member.
+- Create additional `Barbarian`, `Cleric`, `Wizard`, `Sorcerer`, `Fighter`, or `Rogue` characters interactively.
 - Choose from `Human`, `Dwarf`, `Elf`, `Gnome`, and `Halfling`.
 - Roll randomized HP and core ability scores, then apply race and class modifiers.
 - Fight a chosen enemy type against a chosen enemy count.
@@ -16,7 +16,7 @@
 
 | File | Purpose |
 | --- | --- |
-| `main.py` | Interactive entry point and battle loop |
+| `main.py` | Interactive entry point, import flow, and battle loop |
 | `character.py` | Base character behavior, stats, inventory, XP, and export logic |
 | `classes.py` | Playable classes and their stat adjustments |
 | `combatant.py` | Shared combat behavior for characters and enemies |
@@ -50,12 +50,13 @@ python -m unittest discover -s tests -q
 When you run `main.py`, the game will:
 
 1. Ask how many players are in the party.
-2. Ask which class each player should use.
-3. Prompt for each character's name and race.
-4. Print each generated character sheet.
-5. Ask how many enemies are present and which enemy type to spawn.
-6. Run the battle until either the party or enemy group is defeated.
-7. Offer to export the party's character sheets at the end.
+2. Ask for the filename of a character sheet to import for the first party member.
+3. Ask which class each additional player should use.
+4. Prompt for each additional character's name and race.
+5. Print the party summary.
+6. Ask how many enemies are present and which enemy type to spawn.
+7. Run the battle until either the party or enemy group is defeated.
+8. Offer to export the party's character sheets at the end.
 
 ## Playable Classes
 
@@ -133,7 +134,7 @@ This repository includes automated `unittest` coverage for core behavior such as
 
 ## Current Limitations
 
-- `import_character()` exists in `main.py`, but it is still unfinished and is not currently wired into `battle_loop()`.
+- The CLI party flow currently starts with one imported character and then creates the remaining party members interactively.
 - Each encounter supports only one enemy type.
 - Character creation is fully randomized; there is no manual stat allocation.
 - Exported character sheets are plain text only.
