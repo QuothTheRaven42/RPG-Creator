@@ -97,7 +97,7 @@ def battle_loop():
         if import_answer == "y":
             player = import_character()
             players[player.name] = player
-            another = input("Do you have another character to import? (y/n) ")
+            another = input("Do you have another character to import? (y/n) ").strip().lower()
             if another != "y":
                 break
             else:
