@@ -27,5 +27,3 @@ Each class already exists in your hierarchy. You could make certain abilities on
 
 ## Higher effort — skill checks outside combat
 A text-based RPG classically uses stats for non-combat moments: a Charisma check to talk your way past a guard, a Wisdom check to notice a trap, Intelligence to decipher something. This would require adding an event/encounter layer beyond the battle loop, but it's a natural next step if you want the system to feel like a real RPG.
-
-The derived stats approach is probably the cleanest architectural move — it gives every stat a purpose without tangling the combat logic. What's the current shape of your Character class where these stats live? That'd help narrow down which approach fits most naturally.
