@@ -87,7 +87,7 @@ When you run `main.py`, the game will:
 | --- | --- | --- | --- | --- |
 | Goblin | `10` | `d5` | `30%` | `1x` |
 | Skeleton | `15` | `d10` | `20%` | `2x` |
-| Dragon | `100` | `d30` | `10%` | `10x` |
+| Dragon | `100` | `d30` | `10%` | `5x` |
 
 ## Miss Chance
 
