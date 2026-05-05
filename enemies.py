@@ -85,6 +85,7 @@ class Goblin(Enemy):
         """Initialize a goblin enemy."""
         super().__init__("Goblin", "Goblin", 10, 5)
         self.exp_multiplier = 1
+        self.miss_chance = 30
 
 class Skeleton(Enemy):
     """Skeleton enemy type."""
@@ -93,6 +94,7 @@ class Skeleton(Enemy):
         """Initialize a skeleton enemy."""
         super().__init__("Skeleton", "Skeleton", 15, 10)
         self.exp_multiplier = 2
+        self.miss_chance = 20
 
 class Dragon(Enemy):
     """Dragon enemy type."""
@@ -101,3 +103,4 @@ class Dragon(Enemy):
         """Initialize a dragon enemy."""
         super().__init__("Dragon", "Dragon", 100, 30)
         self.exp_multiplier = 10
+        self.miss_chance = 10

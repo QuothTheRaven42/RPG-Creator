@@ -27,6 +27,7 @@ class Combatant:
         self.max_hp = max_hp
         self.current_hp: int = max_hp
 
+
     def take_dmg(self, dmg: int) -> None:
         """Apply incoming damage and mark the combatant passed out at zero HP.
 
@@ -51,7 +52,7 @@ class Combatant:
     def cause_dmg(self, target) -> int:
         """Roll attack damage, apply it to the target, and return amount dealt.
 
-        Returns ``0`` when no attack can happen (attacker or target is passed out).
+        Returns ``0`` when no attack can happen (attacker or target is passed out, or they missed).
         """
         if self.passed_out:
             print(f"{self.name} is passed out and cannot attack.")
@@ -62,6 +63,10 @@ class Combatant:
             )
             return 0
         else:
+            roll = self.roll_dice(100)
+            if roll <= self.miss_chance:
+                print(f"{self.name} attacked, but they missed their opponent entirely!\n")
+                return 0
             # Damage is intentionally tied to hit_dice so class/enemy identity
             # directly controls average damage output.
             dmg = Combatant.roll_dice(self.hit_dice)
@@ -70,6 +75,6 @@ class Combatant:
             return dmg
 
     @staticmethod
-    def roll_dice(d_num: int) -> int:
+    def roll_dice(die_sides: int) -> int:
         """Return the result of rolling one die with the given number of sides."""
-        return randint(1, d_num)
+        return randint(1, die_sides)

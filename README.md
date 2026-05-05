@@ -10,6 +10,8 @@
 - Roll randomized HP and core ability scores, then apply race and class modifiers.
 - Fight a chosen enemy type against a chosen enemy count.
 - Track damage, pass-out state, inventory use, experience, and level progression.
+- Miss chance in combat scales with dexterity for player characters and is fixed per enemy type.
+- Experience rewards scale based on enemy difficulty.
 - Export character sheets to `.txt` files.
 
 ## Project Layout
@@ -81,13 +83,25 @@ When you run `main.py`, the game will:
 
 ## Enemy Types
 
-| Enemy | HP | Attack Die |
-| --- | --- | --- |
-| Goblin | `10` | `d5` |
-| Skeleton | `15` | `d10` |
-| Dragon | `100` | `d30` |
+| Enemy | HP | Attack Die | Miss Chance | XP Multiplier |
+| --- | --- | --- | --- | --- |
+| Goblin | `10` | `d5` | `30%` | `1x` |
+| Skeleton | `15` | `d10` | `20%` | `2x` |
+| Dragon | `100` | `d30` | `10%` | `10x` |
 
-Battles currently use one enemy instance at a time and a counter that tracks how many of that enemy type remain in the encounter.
+## Miss Chance
+
+Miss chance is checked at the start of every attack. A miss deals no damage and awards no experience.
+
+For player characters, miss chance is derived from dexterity using the formula `80 - (dexterity * 5)`. Higher dexterity reduces the chance to miss. With a base dexterity range of `8–16` plus race bonuses, player miss chance typically falls between 30% and 5%.
+
+For enemies, miss chance is a fixed value set per enemy type, as shown in the table above.
+
+## Experience and Leveling
+
+Characters earn experience on every successful hit. The amount scales with the difficulty of the enemy, using the XP multiplier shown in the enemy table. A Dragon kill is worth ten times the experience of a Goblin kill.
+
+Level-up thresholds scale linearly with the current level. On level-up, all stats increase by a percentage of their current value and HP is fully restored.
 
 ## Creating Characters in Code
 

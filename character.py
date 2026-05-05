@@ -30,12 +30,12 @@ class Character(Combatant):
         self.max_hp: int = randint(8, 20)
         super().__init__(self.name, self.class_name, self.max_hp, hit_dice)
 
-        self.strength: int = randint(5, 15)
-        self.dexterity: int = randint(5, 15)
-        self.constitution: int = randint(5, 15)
-        self.intelligence: int = randint(5, 15)
-        self.wisdom: int = randint(5, 15)
-        self.charisma: int = randint(5, 15)
+        self.strength: int = randint(8, 16)
+        self.dexterity: int = randint(8, 16)
+        self.constitution: int = randint(8, 16)
+        self.intelligence: int = randint(8, 16)
+        self.wisdom: int = randint(8, 16)
+        self.charisma: int = randint(8, 16)
 
         self.level: int = 1
         self.exp: int = 0
@@ -101,7 +101,7 @@ class Character(Combatant):
         """Build the formatted character sheet text."""
         char_sheet: str = f"""{self.name} - {self.race} {self.class_name} - level {self.level}
 ---------------------------------
-Health: {self.current_hp}/{self.max_hp}
+Health: {self.max_hp}/{self.max_hp}
 Experience: {self.exp}
 Strength: {self.strength}
 Dexterity: {self.dexterity}
@@ -135,6 +135,10 @@ Charisma: {self.charisma}\n"""
         print(
             f"Character sheet for {self.name} the {self.class_name} has been saved as {self.name}_the_{self.race}_{self.class_name}_lvl{self.level}.txt."
         )
+
+    @property
+    def miss_chance(self):
+        return 80 - (self.dexterity * 5)
 
     def rest(self) -> None:
         """Restore the character to full health and clear passed-out state."""
