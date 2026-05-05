@@ -102,5 +102,5 @@ class Dragon(Enemy):
     def __init__(self) -> None:
         """Initialize a dragon enemy."""
         super().__init__("Dragon", "Dragon", 100, 30)
-        self.exp_multiplier = 10
+        self.exp_multiplier = 5
         self.miss_chance = 10
