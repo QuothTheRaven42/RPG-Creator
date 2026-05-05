@@ -5,10 +5,21 @@ from random import randint
 
 
 class Combatant:
-    """Shared combat behavior for player characters and enemies."""
+    """Shared combat behavior for player characters and enemies.
+
+    This class centralizes combat rules so both sides of a fight stay
+    consistent: same damage flow, same pass-out state, and same dice model.
+    """
 
     def __init__(self, name, class_name, max_hp, hit_dice):
-        """Initialize the common combat state for a battler."""
+        """Initialize the common combat state for a battler.
+
+        Args:
+            name: Display name used in combat messages.
+            class_name: Archetype label (e.g., ``fighter`` or ``goblin``).
+            max_hp: Starting and maximum health.
+            hit_dice: Number of sides on the attack die.
+        """
         self.hit_dice = hit_dice
         self.passed_out: bool = False
         self.name = name
@@ -17,7 +28,11 @@ class Combatant:
         self.current_hp: int = max_hp
 
     def take_dmg(self, dmg: int) -> None:
-        """Apply incoming damage and mark the combatant passed out at zero HP."""
+        """Apply incoming damage and mark the combatant passed out at zero HP.
+
+        A combatant that is already passed out is treated as fixed at 0 HP so
+        repeated damage cannot drive the state lower or produce confusing output.
+        """
         if self.passed_out or self.current_hp <= 0:
             self.current_hp = 0
             self.passed_out = True
@@ -34,7 +49,10 @@ class Combatant:
             print(f"Remaining life for {self.name}: {self.current_hp}/{self.max_hp}\n")
 
     def cause_dmg(self, target) -> int:
-        """Roll attack damage, apply it to the target, and return the amount dealt."""
+        """Roll attack damage, apply it to the target, and return amount dealt.
+
+        Returns ``0`` when no attack can happen (attacker or target is passed out).
+        """
         if self.passed_out:
             print(f"{self.name} is passed out and cannot attack.")
             return 0
@@ -44,6 +62,8 @@ class Combatant:
             )
             return 0
         else:
+            # Damage is intentionally tied to hit_dice so class/enemy identity
+            # directly controls average damage output.
             dmg = Combatant.roll_dice(self.hit_dice)
             print(f"{self.name} attacks for {dmg} hp!")
             target.take_dmg(dmg)

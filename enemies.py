@@ -8,13 +8,21 @@ from combatant import Combatant
 
 
 def spawn_enemy(factory: EnemyFactory) -> Enemy:
-    """Create an enemy instance from the supplied factory."""
+    """Create an enemy instance from the supplied factory.
+
+    Using a factory keeps enemy creation decoupled from battle code so
+    new enemy types can be added without changing the loop logic.
+    """
     enemy = factory.create()
     return enemy
 
 
 class Enemy(Combatant):
-    """Base class for enemy combatants."""
+    """Base class for enemy combatants.
+
+    Enemy objects share combat behavior with characters but intentionally omit
+    player-only concepts like inventory and persistent character sheets.
+    """
 
     def __init__(self, name, class_name, max_hp, hit_dice):
         """Initialize an enemy combatant."""
@@ -35,7 +43,10 @@ class Enemy(Combatant):
 
 
 class EnemyFactory(ABC):
-    """Abstract factory for creating enemies."""
+    """Abstract factory for creating enemies.
+
+    The factory interface keeps spawn logic uniform regardless of enemy type.
+    """
 
     @abstractmethod
     def create(self) -> Enemy:

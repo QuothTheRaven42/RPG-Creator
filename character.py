@@ -19,7 +19,11 @@ class Character(Combatant):
     """
 
     def __init__(self, name, race, hit_dice: int = 0):
-        """Initialize a character with randomized base stats and starter items."""
+        """Initialize a character with randomized stats and starter items.
+
+        The constructor builds a neutral baseline first, then applies race
+        adjustments. This ordering keeps all class/race combinations predictable.
+        """
         self.class_name: str = self.__class__.__name__.lower()
         self.name: str = name
         self.race: str = race
@@ -36,7 +40,7 @@ class Character(Combatant):
         self.level: int = 1
         self.exp: int = 0
 
-        # Race bonuses
+        # Race bonuses are additive so the random baseline still matters.
         if self.race == "Human":
             self.strength += 1
             self.constitution += 1
@@ -61,7 +65,7 @@ class Character(Combatant):
             self.constitution += 1
             self.charisma += 2
 
-        # Starting inventory
+        # Keeping inventory as a dict allows quantity updates without duplicate keys.
         self.inventory: dict = {
             "50 ft rope": 1,
             "small health potion": 4,
@@ -76,7 +80,11 @@ class Character(Combatant):
 
     @classmethod
     def from_prompt(cls):
-        """Prompt the user for a name and race, then create a character."""
+        """Prompt the user for a name and race, then create a character.
+
+        Input validation loops until a supported race is provided to avoid
+        constructing partially invalid character objects.
+        """
         name: str = input(f"What is your {cls.__name__}'s name? ").title()
         while True:
             race: str = input(
@@ -110,14 +118,22 @@ Charisma: {self.charisma}\n"""
         print(f"{self.char_sheet}")
 
     def cause_dmg(self, target) -> int:
-        """Deal damage to a target and award experience on a successful hit."""
+        """Deal damage to a target and award experience on a successful hit.
+
+        Experience is granted only when positive damage is dealt, which prevents
+        leveling from failed actions against invalid or passed-out targets.
+        """
         dmg = super().cause_dmg(target)
         if dmg > 0:
             self.gain_exp()
         return dmg
 
     def export_char_sheet(self) -> None:
-        """Write the character sheet and inventory to a text file."""
+        """Write the character sheet and inventory to a text file.
+
+        The output format is intentionally plain text and stable so the import
+        path can reconstruct a character from this file later.
+        """
         with open(
             f"{self.name}_the_{self.race}_{self.class_name}_lvl{self.level}.txt", "w"
         ) as file:
@@ -139,7 +155,11 @@ Charisma: {self.charisma}\n"""
         print(f"Life total: {self.current_hp}/{self.max_hp}\n")
 
     def use_item(self, item: str) -> None:
-        """Consume an inventory item and apply any of its effects."""
+        """Consume an inventory item and apply any of its effects.
+
+        The item count is adjusted before applying effects so inventory and
+        combat state always remain in sync even if effect logic changes later.
+        """
         if item not in self.inventory:
             print(f"{item} is not in {self.name}'s inventory.\n")
             return
@@ -151,7 +171,7 @@ Charisma: {self.charisma}\n"""
             print(f"{self.name} the {self.class_name} used {item} from their inventory.")
             print(f"There are {self.inventory[item]} {item} left in the inventory.")
 
-        # healing items
+        # Healing items are capped at max HP to avoid overheal exploits.
         if item == "small health potion":
             num: int = Character.roll_dice(6)
             if self.class_name == "cleric":
@@ -186,7 +206,14 @@ Charisma: {self.charisma}\n"""
             print(f"No items in {self.name}'s inventory.\n")
 
     def gain_exp(self, multiplier: int = 1) -> str | None:
-        """Award experience and level up the character when the threshold is met."""
+        """Award experience and level up the character when the threshold is met.
+
+        Args:
+            multiplier: Scales experience rewards for harder encounters.
+
+        Returns:
+            Optional status message when no XP can be granted.
+        """
         if self.passed_out:
             return f"{self.name} is passed out and cannot gain experience."
 
@@ -194,12 +221,14 @@ Charisma: {self.charisma}\n"""
         self.exp += experience
         print(f"{self.name} has gained {experience} experience points and has {self.exp} total.\n")
 
+        # Level threshold scales linearly with current level.
         if self.exp >= 50 * self.level:
             self.exp = 0
             self.level += 1
             print(f"\n{self.name} has gained a level...")
             print(f"They are now level {self.level}!\n")
 
+            # Growth is percentage-based so stronger stats keep compounding.
             self.max_hp += round(2.5 * (self.constitution * 0.1))
             self.strength += round(1 * (self.strength * 0.08))
             self.dexterity += round(1 * (self.dexterity * 0.08))
