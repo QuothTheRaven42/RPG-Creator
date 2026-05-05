@@ -65,7 +65,7 @@ class Combatant:
         else:
             roll = self.roll_dice(100)
             if roll <= self.miss_chance:
-                print(f"{self.name} attacked, but they missed their opponent entirely!\n")
+                print(f"{self.name} attacked, but they missed {target.name} entirely!\n")
                 return 0
             # Damage is intentionally tied to hit_dice so class/enemy identity
             # directly controls average damage output.
