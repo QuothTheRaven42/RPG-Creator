@@ -1,0 +1,17 @@
+Roger - Halfling rogue - level 3
+---------------------------------
+Health: 26/26
+Experience: 80
+Strength: 12
+Dexterity: 25
+Constitution: 13
+Intelligence: 17
+Wisdom: 14
+Charisma: 12
+
+Inventory:
+1 50 ft rope
+4 small health potion
+2 torch
+3 water
+1 rations
