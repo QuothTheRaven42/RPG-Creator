@@ -81,11 +81,11 @@ When you run `main.py`, the game will:
 
 ## Enemy Types
 
-| Enemy | HP | Attack Die |
-| --- | --- | --- |
-| Goblin | `10` | `d5` |
-| Skeleton | `15` | `d10` |
-| Dragon | `100` | `d30` |
+| Enemy | HP | Attack Die | Experience Multiplier
+| --- | --- | --- | --- |
+| Goblin | `10` | `d5` | `1x` |
+| Skeleton | `15` | `d10` | `2x` |
+| Dragon | `100` | `d30` | `10x` |
 
 Battles currently use one enemy instance at a time and a counter that tracks how many of that enemy type remain in the encounter.
 
