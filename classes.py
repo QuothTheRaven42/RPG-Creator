@@ -15,7 +15,7 @@ class Barbarian(Character, Combatant):
 
     def __init__(self, name, race, display: bool = True):
         """Initialize a barbarian and optionally print its character sheet."""
-        super().__init__(name, race, 20)
+        super().__init__(name, race, hit_dice=20)
         # Tradeoff model: stronger melee and survivability, weaker caster aptitude.
         self.strength += 3
         self.constitution += 3
@@ -23,6 +23,7 @@ class Barbarian(Character, Combatant):
         if self.intelligence < 7:
             self.intelligence = 7
         self.current_hp: int = self.max_hp
+        self.hit_dice += self.strength // 2
         if display:
             self.display_sheet()
 
@@ -32,7 +33,7 @@ class Cleric(Character, Combatant):
 
     def __init__(self, name, race, display: bool = True):
         """Initialize a cleric and optionally print its character sheet."""
-        super().__init__(name, race, 6)
+        super().__init__(name, race, hit_dice=6)
         # Tradeoff model: improved sustain and utility, lower social pressure stat.
         self.constitution += 3
         self.wisdom += 3
@@ -40,6 +41,7 @@ class Cleric(Character, Combatant):
         if self.charisma < 7:
             self.charisma = 7
         self.current_hp: int = self.max_hp
+        self.hit_dice += self.constitution // 2
         if display:
             self.display_sheet()
 
@@ -57,6 +59,7 @@ class Wizard(Character, Combatant):
         if self.max_hp < 7:
             self.max_hp = 7
         self.current_hp: int = self.max_hp
+        self.hit_dice += self.wisdom // 2
         if display:
             self.display_sheet()
 
@@ -74,6 +77,7 @@ class Sorcerer(Character, Combatant):
         if self.dexterity < 7:
             self.dexterity = 7
         self.current_hp: int = self.max_hp
+        self.hit_dice += self.intelligence // 2
         if display:
             self.display_sheet()
 
@@ -91,6 +95,7 @@ class Fighter(Character, Combatant):
         if self.wisdom < 7:
             self.wisdom = 7
         self.current_hp: int = self.max_hp
+        self.hit_dice += self.charisma // 2
         if display:
             self.display_sheet()
 
@@ -108,5 +113,6 @@ class Rogue(Character, Combatant):
         if self.constitution < 7:
             self.constitution = 7
         self.current_hp: int = self.max_hp
+        self.hit_dice += self.dexterity // 2
         if display:
             self.display_sheet()
