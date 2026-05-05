@@ -90,7 +90,7 @@ class Fighter(Character, Combatant):
         super().__init__(name, race, hit_dice=10)
         # Tradeoff model: better offense/leadership, lower wisdom checks.
         self.strength += 3
-        self.charisma += 3
+        self.dexterity += 3
         self.wisdom -= 3
         if self.wisdom < 7:
             self.wisdom = 7
@@ -108,7 +108,7 @@ class Rogue(Character, Combatant):
         super().__init__(name, race, hit_dice=10)
         # Tradeoff model: mobility and utility at the cost of raw toughness.
         self.dexterity += 3
-        self.intelligence += 3
+        self.strength += 3
         self.constitution -= 3
         if self.constitution < 7:
             self.constitution = 7
