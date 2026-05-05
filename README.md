@@ -68,8 +68,8 @@ When you run `main.py`, the game will:
 | Cleric | `8` | `+ CON // 2` | `+3 CON`, `+3 WIS`, `-3 CHA` |
 | Wizard | `12` | `+ WIS // 2` | `+3 INT`, `+3 CHA`, `-3 STR` |
 | Sorcerer | `14` | `+ INT // 2` | `+3 WIS`, `+3 INT`, `-3 DEX` |
-| Fighter | `10` | `+ CHA // 2` | `+3 STR`, `+3 CHA`, `-3 WIS` |
-| Rogue | `10` | `+ DEX // 2` | `+3 DEX`, `+3 INT`, `-3 CON` |
+| Fighter | `10` | `+ CHA // 2` | `+3 STR`, `+3 DEX`, `-3 WIS` |
+| Rogue | `10` | `+ DEX // 2` | `+3 DEX`, `+3 STR`, `-3 CON` |
 
 ## Playable Races
 
