@@ -208,6 +208,8 @@ def battle_loop():
                         done = True
                         break
             if done:
+                for character in players:
+                    character.current_hp = character.max_hp
                 break
 
     export_choice: str = (
