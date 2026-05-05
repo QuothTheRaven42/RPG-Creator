@@ -1,4 +1,4 @@
-                                                                                                                    ## Low effort — passive combat modifiers
+## Low effort — passive combat modifiers
 
 Strength → bonus to physical attack damage or hit chance 
 
