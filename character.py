@@ -117,16 +117,6 @@ Charisma: {self.charisma}\n"""
         print(f"\nYour character sheet for {self.name} the {self.class_name}:")
         print(f"{self.char_sheet}")
 
-    def cause_dmg(self, target) -> int:
-        """Deal damage to a target and award experience on a successful hit.
-
-        Experience is granted only when positive damage is dealt, which prevents
-        leveling from failed actions against invalid or passed-out targets.
-        """
-        dmg = super().cause_dmg(target)
-        if dmg > 0:
-            self.gain_exp()
-        return dmg
 
     def export_char_sheet(self) -> None:
         """Write the character sheet and inventory to a text file.
@@ -153,6 +143,19 @@ Charisma: {self.charisma}\n"""
         self.passed_out = False
         print(f"{self.name} the {self.class_name} is rested up and ready to go!")
         print(f"Life total: {self.current_hp}/{self.max_hp}\n")
+
+
+    def cause_dmg(self, target) -> int:
+        """Deal damage to a target and award experience on a successful hit.
+
+        Experience is granted only when positive damage is dealt, which prevents
+        leveling from failed actions against invalid or passed-out targets.
+        """
+        dmg = super().cause_dmg(target)
+        if dmg > 0:
+            self.gain_exp(target.exp_multiplier)
+        return dmg
+
 
     def use_item(self, item: str) -> None:
         """Consume an inventory item and apply any of its effects.
@@ -205,11 +208,11 @@ Charisma: {self.charisma}\n"""
         else:
             print(f"No items in {self.name}'s inventory.\n")
 
-    def gain_exp(self, multiplier: int = 1) -> str | None:
+    def gain_exp(self, exp_multiplier: int = 1) -> str | None:
         """Award experience and level up the character when the threshold is met.
 
         Args:
-            multiplier: Scales experience rewards for harder encounters.
+            exp_multiplier: Scales experience rewards for harder encounters.
 
         Returns:
             Optional status message when no XP can be granted.
@@ -217,7 +220,7 @@ Charisma: {self.charisma}\n"""
         if self.passed_out:
             return f"{self.name} is passed out and cannot gain experience."
 
-        experience = 10 * multiplier
+        experience = 10 * exp_multiplier
         self.exp += experience
         print(f"{self.name} has gained {experience} experience points and has {self.exp} total.\n")
 

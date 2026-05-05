@@ -84,7 +84,7 @@ class Goblin(Enemy):
     def __init__(self) -> None:
         """Initialize a goblin enemy."""
         super().__init__("Goblin", "Goblin", 10, 5)
-
+        self.exp_multiplier = 1
 
 class Skeleton(Enemy):
     """Skeleton enemy type."""
@@ -92,7 +92,7 @@ class Skeleton(Enemy):
     def __init__(self) -> None:
         """Initialize a skeleton enemy."""
         super().__init__("Skeleton", "Skeleton", 15, 10)
-
+        self.exp_multiplier = 2
 
 class Dragon(Enemy):
     """Dragon enemy type."""
@@ -100,3 +100,4 @@ class Dragon(Enemy):
     def __init__(self) -> None:
         """Initialize a dragon enemy."""
         super().__init__("Dragon", "Dragon", 100, 30)
+        self.exp_multiplier = 10
