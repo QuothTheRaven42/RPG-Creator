@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 from random import randint
+import time
 
 
 class Combatant:
@@ -48,6 +49,7 @@ class Combatant:
         else:
             print(f"{self.name} has taken {dmg} points of damage!")
             print(f"Remaining life for {self.name}: {self.current_hp}/{self.max_hp}\n")
+            time.sleep(4)
 
     def cause_dmg(self, target) -> int:
         """Roll attack damage, apply it to the target, and return amount dealt.

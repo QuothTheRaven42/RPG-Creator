@@ -164,7 +164,7 @@ def battle_loop():
             enemy: Enemy = spawn_enemy(ENEMIES[enemy_type]())
             enemies[enemy] = num_enemies
             print(f"Spawned {num_enemies} {enemy}\n")
-            time.sleep(2)
+            time.sleep(4)
             break
 
     # Main combat loop: enemies attack first each round, then players retaliate.
@@ -179,7 +179,7 @@ def battle_loop():
         for _ in range(enemies[enemy]):
             if not enemy.passed_out:
                 enemy.cause_dmg(choice(active_players))
-                time.sleep(2)
+                time.sleep(4)
 
         # Skip passed-out players so they do not act until revived.
         active_players = [p for p in players.values() if p.current_hp > 0]
@@ -189,7 +189,7 @@ def battle_loop():
             for enemy in enemies.keys():
                 if not player.passed_out and not enemy.passed_out:
                     player.cause_dmg(enemy)
-                    time.sleep(2)
+                    time.sleep(4)
 
                 if enemy.passed_out:
                     enemies[enemy] -= 1
@@ -200,11 +200,11 @@ def battle_loop():
                         print(
                             f"Another enemy steps forward! {enemies[enemy]} of the enemies remain.\n"
                         )
-                        time.sleep(2)
+                        time.sleep(4)
 
                     else:
                         print(f"Every enemy has been defeated!")
-                        time.sleep(2)
+                        time.sleep(4)
                         done = True
                         break
             if done:

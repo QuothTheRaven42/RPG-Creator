@@ -15,7 +15,7 @@ class Barbarian(Character, Combatant):
 
     def __init__(self, name, race, display: bool = True):
         """Initialize a barbarian and optionally print its character sheet."""
-        super().__init__(name, race, hit_dice=20)
+        super().__init__(name, race, hit_dice=14)
         # Tradeoff model: stronger melee and survivability, weaker caster aptitude.
         self.strength += 3
         self.constitution += 3
@@ -33,7 +33,7 @@ class Cleric(Character, Combatant):
 
     def __init__(self, name, race, display: bool = True):
         """Initialize a cleric and optionally print its character sheet."""
-        super().__init__(name, race, hit_dice=6)
+        super().__init__(name, race, hit_dice=8)
         # Tradeoff model: improved sustain and utility, lower social pressure stat.
         self.constitution += 3
         self.wisdom += 3
@@ -51,7 +51,7 @@ class Wizard(Character, Combatant):
 
     def __init__(self, name, race, display: bool = True):
         """Initialize a wizard and optionally print its character sheet."""
-        super().__init__(name, race, hit_dice=8)
+        super().__init__(name, race, hit_dice=12)
         # Tradeoff model: stronger spell potential for reduced survivability.
         self.intelligence += 3
         self.charisma += 3
@@ -69,7 +69,7 @@ class Sorcerer(Character, Combatant):
 
     def __init__(self, name, race, display: bool = True):
         """Initialize a sorcerer and optionally print its character sheet."""
-        super().__init__(name, race, hit_dice=16)
+        super().__init__(name, race, hit_dice=14)
         # Tradeoff model: elevated casting stats at the cost of dexterity.
         self.wisdom += 3
         self.intelligence += 3
@@ -87,7 +87,7 @@ class Fighter(Character, Combatant):
 
     def __init__(self, name, race, display: bool = True):
         """Initialize a fighter and optionally print its character sheet."""
-        super().__init__(name, race, hit_dice=14)
+        super().__init__(name, race, hit_dice=10)
         # Tradeoff model: better offense/leadership, lower wisdom checks.
         self.strength += 3
         self.charisma += 3
@@ -105,7 +105,7 @@ class Rogue(Character, Combatant):
 
     def __init__(self, name, race, display: bool = True):
         """Initialize a rogue and optionally print its character sheet."""
-        super().__init__(name, race, hit_dice=8)
+        super().__init__(name, race, hit_dice=10)
         # Tradeoff model: mobility and utility at the cost of raw toughness.
         self.dexterity += 3
         self.intelligence += 3

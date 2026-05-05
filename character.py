@@ -101,7 +101,7 @@ class Character(Combatant):
         """Build the formatted character sheet text."""
         char_sheet: str = f"""{self.name} - {self.race} {self.class_name} - level {self.level}
 ---------------------------------
-Health: {self.max_hp}/{self.max_hp}
+Health: {self.current_hp}/{self.max_hp}
 Experience: {self.exp}
 Strength: {self.strength}
 Dexterity: {self.dexterity}
@@ -138,7 +138,7 @@ Charisma: {self.charisma}\n"""
 
     @property
     def miss_chance(self):
-        return 80 - (self.dexterity * 5)
+        return 80 - (self.dexterity * 4)
 
     def rest(self) -> None:
         """Restore the character to full health and clear passed-out state."""
