@@ -55,7 +55,7 @@ class Wizard(Character, Combatant):
         # Tradeoff model: stronger spell potential for reduced survivability.
         self.intelligence += 3
         self.charisma += 3
-        self.max_hp -= 3
+        self.strength -= 3
         if self.max_hp < 7:
             self.max_hp = 7
         self.current_hp: int = self.max_hp
