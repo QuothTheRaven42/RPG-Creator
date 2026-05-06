@@ -54,7 +54,7 @@ class Wizard(Character, Combatant):
         super().__init__(name, race, hit_dice=12)
         # Tradeoff model: stronger spell potential for reduced survivability.
         self.intelligence += 4
-        self.charisma += 4
+        self.dexterity += 4
         self.strength -= 4
         if self.max_hp < 7:
             self.max_hp = 7
@@ -90,7 +90,7 @@ class Fighter(Character, Combatant):
         super().__init__(name, race, hit_dice=10)
         # Tradeoff model: better offense/leadership, lower wisdom checks.
         self.strength += 4
-        self.dexterity += 4
+        self.charisma += 4
         self.wisdom -= 4
         if self.wisdom < 7:
             self.wisdom = 7
