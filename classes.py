@@ -37,7 +37,7 @@ class Cleric(Character, Combatant):
         # Tradeoff model: improved sustain and utility, lower social pressure stat.
         self.constitution += 4
         self.wisdom += 4
-        self.charisma -= 4
+        self.dexterity -= 4
         if self.charisma < 7:
             self.charisma = 7
         self.current_hp: int = self.max_hp
@@ -54,7 +54,7 @@ class Wizard(Character, Combatant):
         super().__init__(name, race, hit_dice=12)
         # Tradeoff model: stronger spell potential for reduced survivability.
         self.intelligence += 4
-        self.dexterity += 4
+        self.wisdom += 4
         self.strength -= 4
         if self.max_hp < 7:
             self.max_hp = 7
@@ -71,9 +71,9 @@ class Sorcerer(Character, Combatant):
         """Initialize a sorcerer and optionally print its character sheet."""
         super().__init__(name, race, hit_dice=14)
         # Tradeoff model: elevated casting stats at the cost of dexterity.
-        self.wisdom += 4
+        self. += 4
         self.intelligence += 4
-        self.dexterity -= 4
+        self.charisma -= 4
         if self.dexterity < 7:
             self.dexterity = 7
         self.current_hp: int = self.max_hp
