@@ -71,7 +71,7 @@ class Sorcerer(Character, Combatant):
         """Initialize a sorcerer and optionally print its character sheet."""
         super().__init__(name, race, hit_dice=14)
         # Tradeoff model: elevated casting stats at the cost of dexterity.
-        self. += 4
+        self.dexterity += 4
         self.intelligence += 4
         self.charisma -= 4
         if self.dexterity < 7:
