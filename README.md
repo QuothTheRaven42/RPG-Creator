@@ -158,14 +158,21 @@ This repository includes automated `unittest` coverage for core behavior such as
 ## Example Output
 
 ```text
-Barbara - Dwarf barbarian - level 1
+Barbara - Human barbarian - level 1
 ---------------------------------
-Health: 19/20
-Experience: 40
-Strength: 14
-Dexterity: 15
+Health: 15/15
+Experience: 20
+Strength: 19
+Dexterity: 11
 Constitution: 19
-Intelligence: 7
-Wisdom: 6
-Charisma: 7
+Intelligence: 11
+Wisdom: 12
+Charisma: 12
+
+Inventory:
+1 50 ft rope
+4 small health potion
+2 torch
+3 water
+1 rations
 ```
