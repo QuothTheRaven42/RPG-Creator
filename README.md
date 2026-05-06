@@ -64,12 +64,12 @@ When you run `main.py`, the game will:
 
 | Class | Base Hit Dice | Extra Hit Dice Rule | Adjustments |
 | --- | --- | --- | --- |
-| Barbarian | `14` | `+ STR // 2` | `+3 STR`, `+3 CON`, `-3 INT` |
-| Cleric | `8` | `+ CON // 2` | `+3 CON`, `+3 WIS`, `-3 CHA` |
-| Wizard | `12` | `+ WIS // 2` | `+3 INT`, `+3 CHA`, `-3 STR` |
-| Sorcerer | `14` | `+ INT // 2` | `+3 WIS`, `+3 INT`, `-3 DEX` |
-| Fighter | `10` | `+ CHA // 2` | `+3 STR`, `+3 DEX`, `-3 WIS` |
-| Rogue | `10` | `+ DEX // 2` | `+3 DEX`, `+3 STR`, `-3 CON` |
+| Barbarian | `14` | `+ STR // 2` | `+4 STR`, `+4 CON`, `-4 INT` |
+| Cleric | `8` | `+ CON // 2` | `+4 CON`, `+4 WIS`, `-4 CHA` |
+| Wizard | `12` | `+ WIS // 2` | `+4 INT`, `+4 CHA`, `-4 STR` |
+| Sorcerer | `14` | `+ INT // 2` | `+4 WIS`, `+4 INT`, `-4 DEX` |
+| Fighter | `10` | `+ CHA // 2` | `+4 STR`, `+4 DEX`, `-4 WIS` |
+| Rogue | `10` | `+ DEX // 2` | `+4 DEX`, `+4 STR`, `-4 CON` |
 
 ## Playable Races
 
