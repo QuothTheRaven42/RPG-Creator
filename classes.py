@@ -17,9 +17,9 @@ class Barbarian(Character, Combatant):
         """Initialize a barbarian and optionally print its character sheet."""
         super().__init__(name, race, hit_dice=14)
         # Tradeoff model: stronger melee and survivability, weaker caster aptitude.
-        self.strength += 3
-        self.constitution += 3
-        self.intelligence -= 3
+        self.strength += 4
+        self.constitution += 4
+        self.intelligence -= 4
         if self.intelligence < 7:
             self.intelligence = 7
         self.current_hp: int = self.max_hp
@@ -35,9 +35,9 @@ class Cleric(Character, Combatant):
         """Initialize a cleric and optionally print its character sheet."""
         super().__init__(name, race, hit_dice=8)
         # Tradeoff model: improved sustain and utility, lower social pressure stat.
-        self.constitution += 3
-        self.wisdom += 3
-        self.charisma -= 3
+        self.constitution += 4
+        self.wisdom += 4
+        self.charisma -= 4
         if self.charisma < 7:
             self.charisma = 7
         self.current_hp: int = self.max_hp
@@ -53,9 +53,9 @@ class Wizard(Character, Combatant):
         """Initialize a wizard and optionally print its character sheet."""
         super().__init__(name, race, hit_dice=12)
         # Tradeoff model: stronger spell potential for reduced survivability.
-        self.intelligence += 3
-        self.charisma += 3
-        self.strength -= 3
+        self.intelligence += 4
+        self.charisma += 4
+        self.strength -= 4
         if self.max_hp < 7:
             self.max_hp = 7
         self.current_hp: int = self.max_hp
@@ -71,9 +71,9 @@ class Sorcerer(Character, Combatant):
         """Initialize a sorcerer and optionally print its character sheet."""
         super().__init__(name, race, hit_dice=14)
         # Tradeoff model: elevated casting stats at the cost of dexterity.
-        self.wisdom += 3
-        self.intelligence += 3
-        self.dexterity -= 3
+        self.wisdom += 4
+        self.intelligence += 4
+        self.dexterity -= 4
         if self.dexterity < 7:
             self.dexterity = 7
         self.current_hp: int = self.max_hp
@@ -89,9 +89,9 @@ class Fighter(Character, Combatant):
         """Initialize a fighter and optionally print its character sheet."""
         super().__init__(name, race, hit_dice=10)
         # Tradeoff model: better offense/leadership, lower wisdom checks.
-        self.strength += 3
-        self.dexterity += 3
-        self.wisdom -= 3
+        self.strength += 4
+        self.dexterity += 4
+        self.wisdom -= 4
         if self.wisdom < 7:
             self.wisdom = 7
         self.current_hp: int = self.max_hp
@@ -107,9 +107,9 @@ class Rogue(Character, Combatant):
         """Initialize a rogue and optionally print its character sheet."""
         super().__init__(name, race, hit_dice=10)
         # Tradeoff model: mobility and utility at the cost of raw toughness.
-        self.dexterity += 3
-        self.strength += 3
-        self.constitution -= 3
+        self.dexterity += 4
+        self.strength += 4
+        self.constitution -= 4
         if self.constitution < 7:
             self.constitution = 7
         self.current_hp: int = self.max_hp
