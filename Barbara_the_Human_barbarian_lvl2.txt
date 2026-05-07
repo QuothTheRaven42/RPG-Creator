@@ -1,0 +1,17 @@
+Barbara - Human barbarian - level 2
+---------------------------------
+Health: 20/20
+Experience: 60
+Strength: 21
+Dexterity: 12
+Constitution: 21
+Intelligence: 12
+Wisdom: 13
+Charisma: 13
+
+Inventory:
+1 50 ft rope
+4 small health potion
+2 torch
+3 water
+1 rations
