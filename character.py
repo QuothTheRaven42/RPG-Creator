@@ -232,7 +232,7 @@ Charisma: {self.charisma}\n"""
         if self.exp >= 50 * self.level:
             self.exp = 0
             self.level += 1
-            print(f"\n{self.name} has gained a level...")
+            print(f"{self.name} has gained a level...")
             print(f"They are now level {self.level}!\n")
 
             # Growth is percentage-based so stronger stats keep compounding.

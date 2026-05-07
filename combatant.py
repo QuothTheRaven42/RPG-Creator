@@ -46,9 +46,11 @@ class Combatant:
             self.current_hp = 0
             self.passed_out = True
             print(f"{self.name} took {dmg} damage and has passed out!\n")
+            time.sleep(4.0)
         else:
             print(f"{self.name} has taken {dmg} points of damage!")
             print(f"Remaining life for {self.name}: {self.current_hp}/{self.max_hp}\n")
+            time.sleep(4)
 
 
     def cause_dmg(self, target) -> int:
@@ -72,7 +74,7 @@ class Combatant:
             # Damage is intentionally tied to hit_dice so class/enemy identity
             # directly controls average damage output.
             dmg = Combatant.roll_dice(self.hit_dice)
-            print(f"{self.name} attacks for {dmg} hp!")
+            print(f"{self.name} attacks for {dmg} damage!")
             target.take_dmg(dmg)
             return dmg
 
