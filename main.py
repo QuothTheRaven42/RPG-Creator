@@ -154,7 +154,7 @@ def battle_loop():
 
     while True:
         enemy_type = (
-            input("What type of enemy do you have?\nGoblin\nSkeleton\nDragon\n").lower().strip()
+            input("What type of enemy do you have? Choose 1.\nGoblin\nSkeleton\nDragon\n").lower().strip()
         )
         if enemy_type not in ENEMIES:
             print("Please choose one of the available enemy types.")
