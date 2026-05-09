@@ -104,3 +104,4 @@ class Dragon(Enemy):
         super().__init__("Dragon", "Dragon", 100, 30)
         self.exp_multiplier = 5
         self.miss_chance = 10
+
