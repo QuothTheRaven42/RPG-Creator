@@ -30,7 +30,12 @@ def import_character():
     preserve exact saved state (HP, inventory, level, and stats).
     """
     filename: str = input("What is the full filename for this character sheet? ").strip()
-    with open(filename, "r") as file:
+    try:
+        file_obj = open(filename, "r")
+    except FileNotFoundError:
+        print(f"File '{filename}' not found.")
+        return None
+    with file_obj as file:
         file_list = [line.rstrip("\n") for line in file]
 
     # Header format: "<name> - <race> <class> - level <N>"
@@ -104,12 +109,14 @@ def battle_loop():
     while True:
         if import_answer == "y":
             player = import_character()
+            if player is None:
+                continue
             players[player.name] = player
+            if len(players) >= amount:
+                break
             another = input("Do you have another character to import? (y/n) ").strip().lower()
             if another != "y":
                 break
-            else:
-                continue
         else:
             break
 
@@ -202,7 +209,7 @@ def battle_loop():
                         time.sleep(4)
 
                     else:
-                        print(f"Every enemy has been defeated!")
+                        print("Every enemy has been defeated!")
                         time.sleep(4)
                         done = True
                         break
