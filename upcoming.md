@@ -1,29 +1,28 @@
-## Low effort — passive combat modifiers
+## Low Effort - Passive Combat Modifiers
 
-Strength → bonus to physical attack damage or hit chance 
+- Strength: bonus damage or hit chance
+- Dexterity: initiative, evasion, or crit chance
+- Intelligence: spell damage or mana
+- Wisdom: healing, resist, or mana regen
+- Charisma: flee chance or intimidate
 
-Dexterity → initiative order, dodge/evasion chance, or crit chance
+## Medium Effort - Derived Stats
 
-Intelligence → spell damage multiplier or mana pool size
+- Derive `max_hp` from Strength or Wisdom
+- Derive `crit_chance` from Dexterity
+- Derive `spell_power` from Intelligence
 
-Wisdom → healing effectiveness, resist debuffs, or mana regen
+## Medium Effort - Class Gating
 
-Charisma → flee success rate, or a "intimidate" that reduces enemy attack
+- Gate big Wizard spells behind Intelligence
+- Gate Barbarian rage behind Strength
 
-## Medium effort — derived stats
-Rather than stats acting directly, you compute secondary values from them at character creation/load time:
+## Higher Effort - Skill Checks
 
-max_hp partially scales with Strength or Wisdom
+- Add non-combat Charisma checks
+- Add non-combat Wisdom checks
+- Add non-combat Intelligence checks
 
-crit_chance derived from Dexterity
+## Nice To Have - Test Mode
 
-spell_power derived from Intelligence
-
-This keeps combat code clean — it just reads self.crit_chance, not raw stat values.
-
-Medium effort — class-specific stat gating
-
-Each class already exists in your hierarchy. You could make certain abilities only trigger above a stat threshold — a Wizard's big spell only fires if Intelligence ≥ X, a Barbarian rage only if Strength ≥ Y. Rewards building characters intentionally.
-
-## Higher effort — skill checks outside combat
-A text-based RPG classically uses stats for non-combat moments: a Charisma check to talk your way past a guard, a Wisdom check to notice a trap, Intelligence to decipher something. This would require adding an event/encounter layer beyond the battle loop, but it's a natural next step if you want the system to feel like a real RPG.
+- Add `--no-sleep` or `--test-mode` to skip combat delays during tests and quick runs
