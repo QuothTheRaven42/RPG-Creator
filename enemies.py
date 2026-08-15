@@ -24,20 +24,20 @@ class Enemy(Combatant):
     player-only concepts like inventory and persistent character sheets.
     """
 
-    def __init__(self, name, class_name, max_hp, hit_dice):
+    def __init__(self, name: str, class_name: str, max_hp: int, hit_dice: int) -> None:
         """Initialize an enemy combatant."""
         super().__init__(name, class_name, max_hp, hit_dice)
         self.hit_dice: int = hit_dice
 
-    def __str__(self):
+    def __str__(self) -> str:
         """Return a short summary of the enemy's combat stats."""
         return f"{self.name} - {self.hit_dice} hit dice, {self.current_hp} / {self.max_hp} HP"
 
-    def describe(self):
+    def describe(self) -> str:
         """Return a compact enemy description for UI output."""
         return f"{self.name} (attack: {self.hit_dice})"
 
-    def display_sheet(self):
+    def display_sheet(self) -> None:
         """Reject character-sheet display for enemies."""
         raise NotImplementedError("Enemies don't have character sheets.")
 
@@ -87,6 +87,7 @@ class Goblin(Enemy):
         self.exp_multiplier = 1
         self.miss_chance = 30
 
+
 class Skeleton(Enemy):
     """Skeleton enemy type."""
 
@@ -96,6 +97,7 @@ class Skeleton(Enemy):
         self.exp_multiplier = 2
         self.miss_chance = 20
 
+
 class Dragon(Enemy):
     """Dragon enemy type."""
 
@@ -104,4 +106,3 @@ class Dragon(Enemy):
         super().__init__("Dragon", "Dragon", 100, 30)
         self.exp_multiplier = 5
         self.miss_chance = 10
-

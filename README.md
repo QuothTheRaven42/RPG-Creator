@@ -8,7 +8,7 @@
 - Create `Barbarian`, `Cleric`, `Wizard`, `Sorcerer`, `Fighter`, or `Rogue` characters interactively.
 - Choose from `Human`, `Dwarf`, `Elf`, `Gnome`, and `Halfling`.
 - Roll randomized HP and core ability scores, then apply race and class modifiers.
-- Fight a chosen enemy type against a chosen enemy count.
+- Fight one or more enemy groups in a single encounter.
 - Track damage, pass-out state, inventory use, experience, and level progression.
 - Miss chance in combat scales with dexterity for player characters and is fixed per enemy type.
 - Experience rewards scale based on enemy difficulty.
@@ -18,7 +18,7 @@
 
 | File | Purpose |
 | --- | --- |
-| `main.py` | Interactive entry point, import flow, and battle loop |
+| `main.py` | Interactive entry point, setup flow, and battle loop |
 | `character.py` | Base character behavior, stats, inventory, XP, and export logic |
 | `classes.py` | Playable classes and their stat adjustments |
 | `combatant.py` | Shared combat behavior for characters and enemies |
@@ -56,20 +56,21 @@ When you run `main.py`, the game will:
 3. If importing, repeatedly prompt for sheet filenames until you stop.
 4. Create any remaining party members by choosing class, then entering name and race.
 5. Print the party summary.
-6. Ask how many enemies are present and which enemy type to spawn.
-7. Run combat rounds (enemies attack first, then active players) until one side is defeated.
-8. Offer to export the party's character sheets at the end.
+6. Ask how many enemies are present in each enemy group and which enemy type to spawn.
+7. Start the combat loop, where enemies attack first and then active players retaliate.
+8. Continue combat until one side is defeated.
+9. Offer to export the party's character sheets at the end.
 
 ## Playable Classes
 
 | Class | Base Hit Dice | Extra Hit Dice Rule | Adjustments |
 | --- | --- | --- | --- |
-| Barbarian | `14` | `+ STR // 2` | `+4 STR`, `+4 CON`, `-4 INT` |
-| Cleric | `8` | `+ CON // 2` | `+4 CON`, `+4 WIS`, `-4 DEX` |
-| Wizard | `12` | `+ WIS // 2` | `+4 INT`, `+4 WIS`, `-4 STR` |
-| Sorcerer | `14` | `+ INT // 2` | `+4 DEX`, `+4 INT`, `-4 CHA` |
-| Fighter | `10` | `+ CHA // 2` | `+4 STR`, `+4 CHA`, `-4 WIS` |
-| Rogue | `10` | `+ DEX // 2` | `+4 DEX`, `+4 STR`, `-4 CON` |
+| Barbarian | `14` | `+ STR // 2` | `+3 STR`, `+3 CON`, `-3 INT` |
+| Cleric | `8` | `+ CON // 2` | `+3 CON`, `+3 WIS`, `-3 CHA` |
+| Wizard | `12` | `+ WIS // 2` | `+3 INT`, `+3 CHA`, `-3 max HP` |
+| Sorcerer | `14` | `+ INT // 2` | `+3 WIS`, `+3 INT`, `-3 DEX` |
+| Fighter | `10` | `+ CHA // 2` | `+3 STR`, `+3 CHA`, `-3 WIS` |
+| Rogue | `10` | `+ DEX // 2` | `+3 DEX`, `+3 INT`, `-3 CON` |
 
 ## Playable Races
 
@@ -158,21 +159,14 @@ This repository includes automated `unittest` coverage for core behavior such as
 ## Example Output
 
 ```text
-Barbara - Human barbarian - level 1
+Barbara - Dwarf barbarian - level 1
 ---------------------------------
-Health: 15/15
-Experience: 20
-Strength: 19
-Dexterity: 11
+Health: 19/20
+Experience: 40
+Strength: 14
+Dexterity: 15
 Constitution: 19
-Intelligence: 11
-Wisdom: 12
-Charisma: 12
-
-Inventory:
-1 50 ft rope
-4 small health potion
-2 torch
-3 water
-1 rations
+Intelligence: 7
+Wisdom: 6
+Charisma: 7
 ```

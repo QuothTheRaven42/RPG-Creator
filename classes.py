@@ -13,7 +13,7 @@ from combatant import Combatant
 class Barbarian(Character, Combatant):
     """Frontline class with high strength and durability."""
 
-    def __init__(self, name, race, display: bool = True):
+    def __init__(self, name: str, race: str, display: bool = True) -> None:
         """Initialize a barbarian and optionally print its character sheet."""
         super().__init__(name, race, hit_dice=14)
         # Tradeoff model: stronger melee and survivability, weaker caster aptitude.
@@ -31,7 +31,7 @@ class Barbarian(Character, Combatant):
 class Cleric(Character, Combatant):
     """Support class emphasizing wisdom and toughness."""
 
-    def __init__(self, name, race, display: bool = True):
+    def __init__(self, name: str, race: str, display: bool = True) -> None:
         """Initialize a cleric and optionally print its character sheet."""
         super().__init__(name, race, hit_dice=8)
         # Tradeoff model: improved sustain and utility, lower social pressure stat.
@@ -49,7 +49,7 @@ class Cleric(Character, Combatant):
 class Wizard(Character, Combatant):
     """Caster class with high mental stats and lower durability."""
 
-    def __init__(self, name, race, display: bool = True):
+    def __init__(self, name: str, race: str, display: bool = True) -> None:
         """Initialize a wizard and optionally print its character sheet."""
         super().__init__(name, race, hit_dice=12)
         # Tradeoff model: stronger spell potential for reduced survivability.
@@ -67,7 +67,7 @@ class Wizard(Character, Combatant):
 class Sorcerer(Character, Combatant):
     """Magic class with strong mental stats and weaker agility."""
 
-    def __init__(self, name, race, display: bool = True):
+    def __init__(self, name: str, race: str, display: bool = True) -> None:
         """Initialize a sorcerer and optionally print its character sheet."""
         super().__init__(name, race, hit_dice=14)
         # Tradeoff model: elevated casting stats at the cost of dexterity.
@@ -85,7 +85,7 @@ class Sorcerer(Character, Combatant):
 class Fighter(Character, Combatant):
     """Balanced martial class with strong offense."""
 
-    def __init__(self, name, race, display: bool = True):
+    def __init__(self, name: str, race: str, display: bool = True) -> None:
         """Initialize a fighter and optionally print its character sheet."""
         super().__init__(name, race, hit_dice=10)
         # Tradeoff model: better offense/leadership, lower wisdom checks.
@@ -103,7 +103,7 @@ class Fighter(Character, Combatant):
 class Rogue(Character, Combatant):
     """Skirmisher class emphasizing precision and cleverness."""
 
-    def __init__(self, name, race, display: bool = True):
+    def __init__(self, name: str, race: str, display: bool = True) -> None:
         """Initialize a rogue and optionally print its character sheet."""
         super().__init__(name, race, hit_dice=10)
         # Tradeoff model: mobility and utility at the cost of raw toughness.
