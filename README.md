@@ -147,12 +147,12 @@ This repository includes automated `unittest` coverage for core behavior such as
 - item usage
 - input validation in the main battle loop
 - import reconstruction of saved state (inventory, experience, passed-out status)
+- friendly import errors for malformed sheets, including line-numbered parser failures
 
 ## Current Limitations
 
-- The import flow assumes the file matches this project's export format and does not currently handle malformed files with friendly errors.
-- Imported class names are parsed from the file header and expected to match current class keys (lowercase names such as `fighter`, `rogue`, etc.).
-- Each encounter supports only one enemy type.
+- Imported class names are still limited to the current class keys (lowercase names such as `fighter`, `rogue`, etc.).
+- Each enemy group still uses one enemy type at a time.
 - Character creation is fully randomized; there is no manual stat allocation.
 - Exported character sheets are plain text only.
 

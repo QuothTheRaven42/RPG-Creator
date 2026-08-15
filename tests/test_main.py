@@ -43,7 +43,75 @@ class MainTests(unittest.TestCase):
         self.assertIsNone(player)
         output = buffer.getvalue()
         self.assertIn("Could not import", output)
-        self.assertIn("The header must look like", output)
+        self.assertIn("Line 1: the header must look like", output)
+
+    def test_import_character_rejects_unsupported_class(self) -> None:
+        """Sheets with unknown class names should fail with a readable error."""
+        with tempfile.NamedTemporaryFile("w", delete=False, suffix=".txt") as tmp:
+            tmp.write(
+                "Ari - Elf necromancer - level 1\n"
+                "---------------------------------\n"
+                "Health: 10/10\n"
+                "Experience: 0\n"
+                "Strength: 10\n"
+                "Dexterity: 10\n"
+                "Constitution: 10\n"
+                "Intelligence: 10\n"
+                "Wisdom: 10\n"
+                "Charisma: 10\n"
+                "Inventory:\n"
+                "1 torch\n"
+            )
+            unsupported_sheet = Path(tmp.name)
+
+        buffer = io.StringIO()
+        try:
+            with (
+                patch("builtins.input", return_value=str(unsupported_sheet)),
+                contextlib.redirect_stdout(buffer),
+            ):
+                player = main.import_character()
+        finally:
+            unsupported_sheet.unlink(missing_ok=True)
+
+        self.assertIsNone(player)
+        output = buffer.getvalue()
+        self.assertIn("Could not import", output)
+        self.assertIn("Line 1: unsupported class 'necromancer'", output)
+
+    def test_import_character_reports_inventory_line_number(self) -> None:
+        """Bad inventory entries should identify the failing line number."""
+        with tempfile.NamedTemporaryFile("w", delete=False, suffix=".txt") as tmp:
+            tmp.write(
+                "Ari - Elf fighter - level 1\n"
+                "---------------------------------\n"
+                "Health: 10/10\n"
+                "Experience: 0\n"
+                "Strength: 10\n"
+                "Dexterity: 10\n"
+                "Constitution: 10\n"
+                "Intelligence: 10\n"
+                "Wisdom: 10\n"
+                "Charisma: 10\n"
+                "Inventory:\n"
+                "torch\n"
+            )
+            broken_inventory_sheet = Path(tmp.name)
+
+        buffer = io.StringIO()
+        try:
+            with (
+                patch("builtins.input", return_value=str(broken_inventory_sheet)),
+                contextlib.redirect_stdout(buffer),
+            ):
+                player = main.import_character()
+        finally:
+            broken_inventory_sheet.unlink(missing_ok=True)
+
+        self.assertIsNone(player)
+        output = buffer.getvalue()
+        self.assertIn("Could not import", output)
+        self.assertIn("Line 12: inventory entry 'torch' does not start with a quantity.", output)
 
     def test_prompt_player_count_retries_invalid_input(self) -> None:
         """The player-count prompt should keep retrying until input is valid."""

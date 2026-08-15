@@ -113,31 +113,35 @@ def _parse_character_sheet(file_list: list[str]) -> tuple[str, str, str, int, in
     header = file_list[0].strip().split(" - ")
     if len(header) != 3:
         raise ValueError(
-            "The header must look like '<name> - <race> <class> - level <N>'."
+            "Line 1: the header must look like '<name> - <race> <class> - level <N>'."
         )
 
     name = header[0].strip()
     race_and_class = header[1].split(" ", maxsplit=1)
     if len(race_and_class) != 2:
-        raise ValueError("The header must include both a race and a class.")
+        raise ValueError("Line 1: the header must include both a race and a class.")
 
     race = race_and_class[0].strip()
     class_name = race_and_class[1].strip().lower()
+    if class_name not in CLASSES:
+        raise ValueError(
+            f"Line 1: unsupported class '{class_name}'. Expected one of: {', '.join(sorted(CLASSES))}."
+        )
 
     level_bits = header[2].split(" ", maxsplit=1)
     if len(level_bits) != 2 or level_bits[0].lower() != "level":
-        raise ValueError("The header must include a level number.")
+        raise ValueError("Line 1: the header must include a level number.")
 
     try:
         level = int(level_bits[1])
     except ValueError as exc:
-        raise ValueError("The level value must be a whole number.") from exc
+        raise ValueError("Line 1: the level value must be a whole number.") from exc
 
     fields: dict[str, str] = {}
     items: dict[str, int] = {}
     in_inventory = False
 
-    for line in file_list[1:]:
+    for line_number, line in enumerate(file_list[1:], start=2):
         stripped = line.strip()
         if not stripped or set(stripped) == {"-"}:
             continue
@@ -147,18 +151,25 @@ def _parse_character_sheet(file_list: list[str]) -> tuple[str, str, str, int, in
             continue
 
         if in_inventory:
-            quantity_text, item_name = stripped.split(" ", maxsplit=1)
+            quantity_and_item = stripped.split(" ", maxsplit=1)
+            if len(quantity_and_item) != 2:
+                raise ValueError(
+                    f"Line {line_number}: inventory entry '{stripped}' does not start with a quantity."
+                )
+            quantity_text, item_name = quantity_and_item
             try:
                 quantity = int(quantity_text)
             except ValueError as exc:
                 raise ValueError(
-                    f"Inventory entry '{stripped}' does not start with a quantity."
+                    f"Line {line_number}: inventory entry '{stripped}' does not start with a quantity."
                 ) from exc
             items[item_name] = quantity
             continue
 
         if ": " not in stripped:
-            raise ValueError(f"Sheet line '{stripped}' is missing a label/value separator.")
+            raise ValueError(
+                f"Line {line_number}: sheet line '{stripped}' is missing a label/value separator."
+            )
 
         label, value = stripped.split(": ", maxsplit=1)
         fields[label] = value
@@ -175,11 +186,14 @@ def _parse_character_sheet(file_list: list[str]) -> tuple[str, str, str, int, in
     }
     missing_fields = sorted(required_fields - fields.keys())
     if missing_fields:
-        raise ValueError(f"Missing required field(s): {', '.join(missing_fields)}.")
+        raise ValueError(
+            f"Missing required field(s): {', '.join(missing_fields)}. "
+            "The sheet is missing one or more expected export lines."
+        )
 
     health_bits = fields["Health"].split("/", maxsplit=1)
     if len(health_bits) != 2:
-        raise ValueError("The health line must look like 'current/max'.")
+        raise ValueError("Health line must look like 'current/max'.")
 
     try:
         current_hp = int(health_bits[0])
@@ -197,18 +211,15 @@ def import_character() -> Character | None:
         with open(filename, "r") as file:
             file_list = [line.rstrip("\n") for line in file]
         name, race, class_name, level, current_hp, max_hp, fields, items = _parse_character_sheet(file_list)
-        player_class = CLASSES[class_name]
     except FileNotFoundError:
         print(f"File '{filename}' not found.")
-        return None
-    except KeyError:
-        print(f"Character sheet '{filename}' uses unsupported class '{class_name}'.")
         return None
     except ValueError as exc:
         print(f"Could not import '{filename}': {exc}")
         return None
 
     # Build the correct subclass, then replace randomized values with saved data.
+    player_class = CLASSES[class_name]
     player = player_class(name, race, display=False)
     player.level = level
     player.exp = int(fields["Experience"])
